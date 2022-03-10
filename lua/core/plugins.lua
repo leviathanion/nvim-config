@@ -57,5 +57,8 @@ return require('packer').startup(function()
     -- vimshell
     use 'skywind3000/asyncrun.vim'
 
+    -- toggleterm
+    use 'akinsho/toggleterm.nvim'
+
 end)
 

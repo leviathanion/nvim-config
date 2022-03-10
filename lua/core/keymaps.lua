@@ -36,8 +36,8 @@ mapcmd('<leader>sh', 'sp')
 mapcmd('<leader>sv', 'vs')
 
 -- bufferline 左右Tab切换
-mapkey("n", "<C-h>", ":BufferLineCyclePrev<CR>", opt)
-mapkey("n", "<C-l>", ":BufferLineCycleNext<CR>", opt)
+mapcmd('<C-h>', 'BufferLineCyclePrev<CR>')
+mapcmd('<C-l>', 'BufferLineCycleNext<CR>')
 
 
 
@@ -66,3 +66,6 @@ maplua('<leader>gr', 'vim.lsp.buf.references()')
 maplua('<leader>wa', 'vim.lsp.buf.add_workspace_folder()')
 maplua('<leader>wr', 'vim.lsp.buf.remove_workspace_folder()')
 maplua('<leader>wl', 'print(vim.inspect(vim.lsp.buf.list_workspace_folders()))')
+
+-- toggleterm
+mapcmd('<A-t>', 'ToggleTerm direction=float')

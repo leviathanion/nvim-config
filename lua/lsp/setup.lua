@@ -12,7 +12,7 @@ lsp_installer.settings {
 
 -- Include the servers you want to have installed by default below
 local servers = {
-  "ccls",
+  "clangd",
   "pyright",
   "jdtls",
   "yamlls",
@@ -35,7 +35,7 @@ end
 -- nvim-lspconfig config
 -- List of all pre-configured LSP servers:
 -- github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
-local servers = {'ccls', 'pyright', "jdtls", "yamlls", "sumneko_lua", 'html', 'tsserver', 'bashls', 'cssls', 'texlab' }
+local servers = {'clangd', 'pyright', "jdtls", "yamlls", "sumneko_lua", 'html', 'tsserver', 'bashls', 'cssls', 'texlab' }
 for _, lsp in pairs(servers) do
     require('lspconfig')[lsp].setup {
         on_attach = on_attach,
