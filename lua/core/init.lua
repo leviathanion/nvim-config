@@ -60,7 +60,7 @@ vim.o.mouse = "a"
 vim.o.updatetime = 300
 -- 设置 timeoutlen 为等待键盘快捷键连击时间300毫秒，可根据需要设置
 -- 遇到问题详见：https://github.com/nshen/learn-neovim-lua/issues/1
-vim.o.timeoutlen = 300
+-- vim.o.timeoutlen = 300
 -- split window 从下边和右边出现
 vim.o.splitbelow = true
 vim.o.splitright = true
@@ -69,7 +69,6 @@ vim.g.completeopt = "menu,menuone,noselect,noinsert"
 -- 样式
 vim.o.background = "dark"
 vim.o.termguicolors = true
-vim.opt.termguicolors = true
 -- 不可见字符的显示，这里只把空格显示为一个点
 vim.o.list = true
 vim.o.listchars = "space:·"
@@ -79,7 +78,6 @@ vim.o.wildmenu = true
 vim.o.shortmess = vim.o.shortmess .. 'c'
 vim.o.pumheight = 10
 
-vim.opt.termguicolors = true
 require("bufferline").setup{}
 require("core.theme")
 require("core.keymaps")
