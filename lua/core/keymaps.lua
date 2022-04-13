@@ -68,4 +68,5 @@ maplua('<leader>wr', 'vim.lsp.buf.remove_workspace_folder()')
 maplua('<leader>wl', 'print(vim.inspect(vim.lsp.buf.list_workspace_folders()))')
 
 -- toggleterm
-mapcmd('<A-t>', 'ToggleTerm direction=float')
+mapcmd('<C-A-t>', 'ToggleTerm direction=float')
+mapkey('t', '<esc>', [[<C-\><C-n>]])

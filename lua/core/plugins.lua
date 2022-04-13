@@ -60,5 +60,7 @@ return require('packer').startup(function()
     -- toggleterm
     use 'akinsho/toggleterm.nvim'
 
+    -- copilot
+    use 'github/copilot.nvim'
 end)
 
