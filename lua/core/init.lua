@@ -79,12 +79,12 @@ vim.o.wildmenu = true
 vim.o.shortmess = vim.o.shortmess .. 'c'
 vim.o.pumheight = 10
 
-require("bufferline").setup{}
+require("core.plugins")
 require("core.theme")
 require("core.keymaps")
-require("core.plugins")
-require("lsp.setup")
 
+require("bufferline").setup{}
+require("lsp.setup")
 require("configs.autocomplete").config()
 require("configs.filetree").config()
 require("configs.outlinetree").config()
