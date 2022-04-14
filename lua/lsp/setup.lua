@@ -13,6 +13,8 @@ lsp_installer.settings {
 -- Include the servers you want to have installed by default below
 local servers = {
   "clangd",
+  "bashls",
+  "gopls",
   "pyright",
   "jdtls",
   "yamlls",
