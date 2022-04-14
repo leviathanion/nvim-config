@@ -18,13 +18,13 @@ function M.config()
             end,
         },
         mapping = {
-            ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
-            ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-            ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-            ['<C-k>'] = cmp.mapping.select_prev_item(),
-            ['<C-j>'] = cmp.mapping.select_next_item(),
-            ['<C-y>'] = cmp.config.disable,
-            ['<C-e>'] = cmp.mapping({
+            ['<A-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
+            ['<A-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
+            ['<A-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+            ['<A-k>'] = cmp.mapping.select_prev_item(),
+            ['<A-j>'] = cmp.mapping.select_next_item(),
+            ['<A-y>'] = cmp.config.disable,
+            ['<A-e>'] = cmp.mapping({
                 i = cmp.mapping.abort(),
                 c = cmp.mapping.close(),
             }),
