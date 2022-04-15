@@ -83,10 +83,11 @@ require("core.plugins")
 require("core.theme")
 require("core.keymaps")
 
-require("bufferline").setup{}
 require("lsp.setup")
 require("configs.autocomplete").config()
 require("configs.filetree").config()
 require("configs.outlinetree").config()
 require("configs.statusline").config()
 require("configs.treesitter").config()
+require("configs.bufferline").config()
+require("configs.toggleterm").config()

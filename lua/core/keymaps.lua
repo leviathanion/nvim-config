@@ -21,7 +21,7 @@ mapcmd('<leader>ff', "Telescope find_files")
 mapcmd('<leader>fg', "Telescope live_grep")
 mapcmd('<leader>fb', "Telescope buffers")
 
--- s: split 
+-- s: split
 mapkey('n', '<A-h>', '<c-w>h')
 mapkey('n', '<A-j>', '<c-w>j')
 mapkey('n', '<A-k>', '<c-w>k')
