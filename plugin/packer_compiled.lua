@@ -169,6 +169,11 @@ _G.packer_plugins = {
     path = "C:\\Users\\10412\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\popup.nvim",
     url = "https://github.com/nvim-lua/popup.nvim"
   },
+  ripgrep = {
+    loaded = true,
+    path = "C:\\Users\\10412\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\ripgrep",
+    url = "https://github.com/BurntSushi/ripgrep"
+  },
   ["symbols-outline.nvim"] = {
     loaded = true,
     path = "C:\\Users\\10412\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\symbols-outline.nvim",
@@ -193,6 +198,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "C:\\Users\\10412\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\vim-gitgutter",
     url = "https://github.com/airblade/vim-gitgutter"
+  },
+  ["vim-sandwich"] = {
+    loaded = true,
+    path = "C:\\Users\\10412\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\vim-sandwich",
+    url = "https://github.com/machakann/vim-sandwich"
   }
 }
 

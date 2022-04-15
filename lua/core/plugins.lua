@@ -2,16 +2,19 @@ return require('packer').startup(function()
     use 'wbthomason/packer.nvim'
 
     -- buffer
-    use 'akinsho/bufferline.nvim' 
+    use 'akinsho/bufferline.nvim'
     -- file telescope
-    use 'nvim-lua/popup.nvim'
-    use 'nvim-lua/plenary.nvim'
-    use 'nvim-telescope/telescope.nvim'
-    
-
+    use {
+       'nvim-telescope/telescope.nvim',
+        requires = {
+            {'nvim-lua/plenary.nvim'},
+            {'BurntSushi/ripgrep'},
+            {'nvim-lua/popup.nvim'}
+        }
+    }
     -- themes (disabled other themes to optimize startup time)
     -- use 'sainnhe/sonokai'
-   use 'joshdick/onedark.vim'
+    use 'joshdick/onedark.vim'
 --    use { 'catppuccin/nvim', as='catppuccin' }
 --    use { 'sonph/onehalf', rtp='vim/' }
 --    use 'liuchengxu/space-vim-dark'
@@ -60,6 +63,8 @@ return require('packer').startup(function()
     -- toggleterm
     use 'akinsho/toggleterm.nvim'
 
+    -- vim-sandwich
+    use 'machakann/vim-sandwich'
     -- copilot
     --use 'github/copilot.nvim'
 end)
