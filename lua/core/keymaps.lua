@@ -46,9 +46,9 @@ mapcmd('<C-l>', 'BufferLineCycleNext<CR>')
 -- l: general
 -- g: goto
 -- w: workspace
-maplua('<leader>le', 'vim.diagnostic.open_float()')
+maplua('<leader>lo', 'vim.diagnostic.open_float()')
 maplua('<leader>lq', 'vim.diagnostic.setloclist()')
-maplua('<leader>lk', 'vim.lsp.buf.hover()')
+maplua('<leader>ld', 'vim.lsp.buf.hover()')
 maplua('<leader>lr', 'vim.lsp.buf.rename()')
 maplua('<leader>lh', 'vim.lsp.buf.signature_help()')
 maplua('<leader>la', 'vim.lsp.buf.code_action()')
