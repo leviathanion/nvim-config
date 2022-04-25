@@ -7,9 +7,9 @@ function M.config()
             -- REQUIRED - you must specify a snippet engine
             expand = function(args)
             -- luasnip
-            require('luasnip').lsp_expand(args.body)
+            -- require('luasnip').lsp_expand(args.body)
             -- vsnip
-            -- vim.fn["vsnip#anonymous"](args.body)
+                vim.fn["vsnip#anonymous"](args.body)
             -- snippy
             -- require('snippy').expand_snippet(args.body)
             -- ultisnip
@@ -33,6 +33,7 @@ function M.config()
         },
         sources = cmp.config.sources({
             { name = 'nvim_lsp' },
+            { name = 'vsnip' },
             -- { name = 'luasnip' }, -- For luasnip users.
             -- { name = 'ultisnips' }, -- For ultisnips users.
             -- { name = 'snippy' }, -- For snippy users.
@@ -40,13 +41,13 @@ function M.config()
     })
 
     -- You can also set special config for specific filetypes:
---    cmp.setup.filetype('gitcommit', {
---        sources = cmp.config.sources({
---            { name = 'cmp_git' },
---        }, {
---            { name = 'buffer' },
---        })
---    })
+    cmp.setup.filetype('gitcommit', {
+        sources = cmp.config.sources({
+            { name = 'cmp_git' },
+        }, {
+            { name = 'buffer' },
+        })
+    })
 
     -- nvim-cmp for commands
     cmp.setup.cmdline('/', {
@@ -82,11 +83,12 @@ function M.config()
     cmp.setup {
         formatting = {
             format = lspkind.cmp_format({
-                mode = 'symbol', -- show only symbol annotations
+                mode = 'symbol_text', -- show only symbol annotations
                 maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
                 -- The function below will be called before any actual modifications from lspkind
                 -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
                 before = function (entry, vim_item)
+                  vim_item.menu = "["..string.upper(entry.source.name).."]"
                   return vim_item
                 end
             })
