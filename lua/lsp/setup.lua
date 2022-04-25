@@ -37,7 +37,6 @@ end
 -- nvim-lspconfig config
 -- List of all pre-configured LSP servers:
 -- github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
-local servers = {'clangd', 'pyright', "jdtls", "yamlls", "sumneko_lua", 'html', 'tsserver', 'bashls', 'cssls', 'texlab' }
 for _, lsp in pairs(servers) do
     require('lspconfig')[lsp].setup {
         on_attach = on_attach,
