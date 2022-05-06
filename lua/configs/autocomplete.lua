@@ -37,6 +37,7 @@ function M.config()
             { name = 'luasnip' }, -- For luasnip users.
             -- { name = 'ultisnips' }, -- For ultisnips users.
             -- { name = 'snippy' }, -- For snippy users.
+            { name = 'latex_symbols' },
         }, {{ name = 'buffer' },
             { name = 'path'   }})
     })
@@ -61,6 +62,8 @@ function M.config()
             { name = 'path' }
         }, {
             { name = 'cmdline' }
+        },{
+            { name = 'nvim_lua'}
         })
     })
 

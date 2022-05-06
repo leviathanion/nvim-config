@@ -94,10 +94,20 @@ _G.packer_plugins = {
     path = "C:\\Users\\10412\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\cmp-cmdline",
     url = "https://github.com/hrsh7th/cmp-cmdline"
   },
+  ["cmp-latex-symbols"] = {
+    loaded = true,
+    path = "C:\\Users\\10412\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\cmp-latex-symbols",
+    url = "https://github.com/kdheepak/cmp-latex-symbols"
+  },
   ["cmp-nvim-lsp"] = {
     loaded = true,
     path = "C:\\Users\\10412\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\cmp-nvim-lsp",
     url = "https://github.com/hrsh7th/cmp-nvim-lsp"
+  },
+  ["cmp-nvim-lua"] = {
+    loaded = true,
+    path = "C:\\Users\\10412\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\cmp-nvim-lua",
+    url = "https://github.com/hrsh7th/cmp-nvim-lua"
   },
   ["cmp-path"] = {
     loaded = true,
