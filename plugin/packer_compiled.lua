@@ -119,6 +119,16 @@ _G.packer_plugins = {
     path = "C:\\Users\\10412\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\cmp_luasnip",
     url = "https://github.com/saadparwaiz1/cmp_luasnip"
   },
+  ["fidget.nvim"] = {
+    loaded = true,
+    path = "C:\\Users\\10412\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\fidget.nvim",
+    url = "https://github.com/j-hui/fidget.nvim"
+  },
+  ["indent-blankline.nvim"] = {
+    loaded = true,
+    path = "C:\\Users\\10412\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\indent-blankline.nvim",
+    url = "https://github.com/lukas-reineke/indent-blankline.nvim"
+  },
   ["lspkind-nvim"] = {
     loaded = true,
     path = "C:\\Users\\10412\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\lspkind-nvim",
@@ -128,6 +138,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "C:\\Users\\10412\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\lualine.nvim",
     url = "https://github.com/nvim-lualine/lualine.nvim"
+  },
+  ["nvim-autopairs"] = {
+    loaded = true,
+    path = "C:\\Users\\10412\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\nvim-autopairs",
+    url = "https://github.com/windwp/nvim-autopairs"
   },
   ["nvim-cmp"] = {
     loaded = true,

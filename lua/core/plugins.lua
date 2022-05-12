@@ -70,5 +70,11 @@ return require('packer').startup(function()
     use 'machakann/vim-sandwich'
     -- copilot
     --use 'github/copilot.nvim'
+    -- indent info
+    use 'lukas-reineke/indent-blankline.nvim'
+    -- autopairs
+    use 'windwp/nvim-autopairs'
+    -- LSP进度提示
+    use 'j-hui/fidget.nvim'
 end)
 
