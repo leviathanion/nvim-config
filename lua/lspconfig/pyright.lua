@@ -25,18 +25,20 @@ local function organize_imports()
 end
 
 return {
-  default_config = {
-    cmd = cmd,
-    filetypes = { 'python' },
-    root_dir = util.root_pattern(unpack(root_files)),
-    single_file_support = true,
-    settings = {
-      python = {
-        analysis = {
-          autoSearchPaths = true,
-          useLibraryCodeForTypes = true,
-          diagnosticMode = 'workspace',
-        },
+  cmd = cmd,
+  filetypes = { 'python' },
+  root_dir = function(fname)
+    a = util.root_pattern(unpack(root_files))(fname)
+    b = vim.fn.getcwd() 
+    return a or b
+  end,
+  single_file_support = true,
+  settings = {
+    python = {
+      analysis = {
+        autoSearchPaths = true,
+        useLibraryCodeForTypes = true,
+        diagnosticMode = 'workspace',
       },
     },
   },
