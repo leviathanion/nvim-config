@@ -12,7 +12,7 @@ function M.config()
         },
         -- 启用基于Treesitter的代码格式化(=) . NOTE: This is an experimental feature.
         indent = {
-            enable = true
+            enable = false
         },
         -- 启用增量选择
         incremental_selection = {

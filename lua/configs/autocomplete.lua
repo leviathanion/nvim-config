@@ -38,6 +38,8 @@ function M.config()
             -- { name = 'ultisnips' }, -- For ultisnips users.
             -- { name = 'snippy' }, -- For snippy users.
             { name = 'latex_symbols' },
+            { name = 'nvim_lua' },
+            { name = 'nvim_lsp_signature_help' },
         }, {{ name = 'buffer' },
             { name = 'path'   }})
     })

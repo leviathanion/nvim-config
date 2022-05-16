@@ -104,6 +104,11 @@ _G.packer_plugins = {
     path = "C:\\Users\\10412\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\cmp-nvim-lsp",
     url = "https://github.com/hrsh7th/cmp-nvim-lsp"
   },
+  ["cmp-nvim-lsp-signature-help"] = {
+    loaded = true,
+    path = "C:\\Users\\10412\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\cmp-nvim-lsp-signature-help",
+    url = "https://github.com/hrsh7th/cmp-nvim-lsp-signature-help"
+  },
   ["cmp-nvim-lua"] = {
     loaded = true,
     path = "C:\\Users\\10412\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\cmp-nvim-lua",
@@ -118,11 +123,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "C:\\Users\\10412\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\cmp_luasnip",
     url = "https://github.com/saadparwaiz1/cmp_luasnip"
-  },
-  ["copilot.nvim"] = {
-    loaded = true,
-    path = "C:\\Users\\10412\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\copilot.nvim",
-    url = "https://github.com/github/copilot.nvim"
   },
   ["fidget.nvim"] = {
     loaded = true,
