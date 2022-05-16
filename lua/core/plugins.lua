@@ -14,7 +14,7 @@ return require('packer').startup(function()
     }
     -- themes (disabled other themes to optimize startup time)
     -- use 'sainnhe/sonokai'
-    use 'joshdick/onedark.vim'
+     use 'joshdick/onedark.vim'
 --    use { 'catppuccin/nvim', as='catppuccin' }
 --    use { 'sonph/onehalf', rtp='vim/' }
 --    use 'liuchengxu/space-vim-dark'
@@ -69,12 +69,14 @@ return require('packer').startup(function()
     -- vim-sandwich
     use 'machakann/vim-sandwich'
     -- copilot
-    --use 'github/copilot.nvim'
+    -- use 'github/copilot.nvim'
     -- indent info
     use 'lukas-reineke/indent-blankline.nvim'
     -- autopairs
     use 'windwp/nvim-autopairs'
     -- LSP进度提示
     use 'j-hui/fidget.nvim'
+    -- 通知弹窗美化
+    use 'rcarriga/nvim-notify'
 end)
 

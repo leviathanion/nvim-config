@@ -20,6 +20,7 @@ mapcmd('<A-m>', 'NvimTreeToggle')
 mapcmd('<leader>ff', "Telescope find_files")
 mapcmd('<leader>fg', "Telescope live_grep")
 mapcmd('<leader>fb', "Telescope buffers")
+maplua('<leader>fn', "require('telescope').extensions.notify.notify()<CR>")
 
 -- s: split
 mapkey('n', '<A-h>', '<c-w>h')
