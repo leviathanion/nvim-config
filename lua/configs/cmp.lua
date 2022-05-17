@@ -20,9 +20,8 @@ function M.config()
             ['<A-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
             ['<A-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
             ['<A-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-            ['<A-k>'] = cmp.mapping.select_prev_item(),
-            ['<A-j>'] = cmp.mapping.select_next_item(),
-            ['<A-y>'] = cmp.config.disable,
+            ['<A-k>'] = cmp.mapping(cmp.mapping.select_prev_item(), {'i','c'}),
+            ['<A-j>'] = cmp.mapping(cmp.mapping.select_next_item(), {'i','c'}),
             ['<A-e>'] = cmp.mapping({
                 i = cmp.mapping.abort(),
                 c = cmp.mapping.close(),
