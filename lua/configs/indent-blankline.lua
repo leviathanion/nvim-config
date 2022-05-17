@@ -1,7 +1,12 @@
+local status, indent_blankline = pcall(require, "indent_blankline")
+if not status then
+  vim.notify("没有找到 indent_blankline")
+  return
+end
 local M = {}
 function M.config()
     -- indent_blankline config
-    require('indent_blankline').setup {
+    indent_blankline.setup {
         -- 显示当前所在区域
         show_current_context = true,
         -- 显示当前所在区域的开始位置

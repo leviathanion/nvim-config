@@ -1,6 +1,11 @@
+local status, toggleterm = pcall(require, "toggleterm")
+if not status then
+  vim.notify("没有找到 toggleterm")
+  return
+end
 local M = {}
 function M.config()
-    require('toggleterm').setup {
+    toggleterm.setup {
         size = 20,
         open_mapping = [[<c-\>]],
         hide_numbers = true,

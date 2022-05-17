@@ -17,6 +17,12 @@ function M.config()
         notify_opts.background_colour = "#ffffff"
     end
 
+
+    local status, _ = pcall(require, "notify")
+    if not status then
+    vim.notify("没有找到 notify")
+    return
+    end
     vim.notify = require("notify")
 
     vim.notify.setup(notify_opts)

@@ -1,4 +1,8 @@
-local lsp_installer = require "nvim-lsp-installer"
+local status, lsp_installer= pcall(require, "nvim-lsp-installer")
+if not status then
+  vim.notify("没有找到 nvim-lsp-installer")
+  return
+end
 vim.diagnostic.config(
     {
         -- 诊断的虚拟文本
