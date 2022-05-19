@@ -32,14 +32,17 @@ packer.init({
     git = {
         -- For Chinese users, if the download is slow, you can switch to the github mirror source
         -- replace : https://hub.fastgit.xyz/%s
-        -- default_url_format = "https://github.com/%s",
-        default_url_format = "https://hub.fastgit.xyz/%s",
+         default_url_format = "https://github.com/%s",
+        -- default_url_format = "https://hub.fastgit.xyz/%s",
     },
 })
 
 packer.startup(function()
     use 'wbthomason/packer.nvim'
 
+    -- speed up startup
+    use 'nathom/filetype.nvim'
+    use 'lewis6991/impatient.nvim'
     -- bufferline
     use 'akinsho/bufferline.nvim'
     -- file telescope
