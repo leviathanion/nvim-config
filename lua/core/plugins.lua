@@ -56,7 +56,7 @@ packer.startup(function()
     }
     -- themes (disabled other themes to optimize startup time)
     -- use 'sainnhe/sonokai'
-     use 'joshdick/onedark.vim'
+     use 'navarasu/onedark.nvim'
 --    use { 'catppuccin/nvim', as='catppuccin' }
 --    use { 'sonph/onehalf', rtp='vim/' }
 --    use 'liuchengxu/space-vim-dark'

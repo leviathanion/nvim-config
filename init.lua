@@ -20,10 +20,10 @@ local load_core = function()
     require("core.keymaps")
     -- 插件管理
     require("core.plugins")
+    require("impatient")
     -- 主题配置
     require("core.theme")
 
-    require("impatient")
     require("configs.cmp").config()
     require("configs.nvim-tree").config()
     require("configs.symbols-outline").config()

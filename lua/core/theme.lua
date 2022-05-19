@@ -6,7 +6,7 @@
 -- vim.g.sonokai_disable_italic_comment = 0
 -- vim.cmd('colorscheme sonokai')
 -- onedark
-vim.cmd('colorscheme onedark')
+-- vim.cmd('colorscheme onedark')
 -- onehalfdark
 --vim.cmd('colorscheme onehalfdark')
 --vim.cmd('colorscheme onehalflight')
@@ -15,3 +15,12 @@ vim.cmd('colorscheme onedark')
 -- aylin
 --vim.cmd('colorscheme aylin')
 
+local status, onedark= pcall(require, "onedark")
+if not status then
+  vim.notify("没有找到 onedark")
+  return
+end
+onedark.setup{
+    style = 'cool'
+}
+onedark.load()
