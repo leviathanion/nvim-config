@@ -61,7 +61,12 @@ packer.startup(function()
     use {
         'navarasu/onedark.nvim'
     }
-    
+
+    use {
+        'onsails/lspkind-nvim',
+        after = {"impatient.nvim"},
+    }
+
     use {
         'dstein64/vim-startuptime',
         cmd = "StartupTime"
@@ -182,19 +187,49 @@ packer.startup(function()
             require("configs.fidget").config()
         end
     }
-
+ 
     --completion
-    use 'hrsh7th/cmp-buffer'
-    use 'hrsh7th/cmp-path'
-    use 'hrsh7th/cmp-cmdline'
-    use 'hrsh7th/cmp-nvim-lua'
-    use 'hrsh7th/nvim-cmp'
-    use 'hrsh7th/cmp-nvim-lsp-signature-help'
-    use 'L3MON4D3/LuaSnip'
-    use 'onsails/lspkind-nvim'
-    use 'saadparwaiz1/cmp_luasnip'
+    use {
+        'rafamadriz/friendly-snippets',
+        event = { "InsertEnter", "CmdlineEnter" },
+    }
+    use{
+        'hrsh7th/vim-vsnip',
+        ptp = "viml",
+        after = { "friendly-snippets" },
+    }
+    use {
+        'hrsh7th/nvim-cmp',
+        after = { "vim-vsnip", "lspkind-nvim" },
+        config = function()
+            require("configs.cmp").config()
+        end
+    }
+    use {
+        'hrsh7th/cmp-buffer',
+        after = {"nvim-cmp"}
+    }
+    use {
+        'hrsh7th/cmp-path',
+        after = {"nvim-cmp"}
+    }
+    use {
+        'hrsh7th/cmp-cmdline',
+        after = {"nvim-cmp"}
+    }
+    use {
+        'hrsh7th/cmp-nvim-lua',
+        after = {"nvim-cmp"}
+    }
+    use {
+        'hrsh7th/cmp-nvim-lsp-signature-help',
+        after = {"nvim-cmp"}
+    }
     -- latex support
-    use 'kdheepak/cmp-latex-symbols'
+    use {
+        'kdheepak/cmp-latex-symbols',
+        after = {"nvim-cmp"}
+    }
     -- autopairs
     use {
         'windwp/nvim-autopairs',

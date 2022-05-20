@@ -25,7 +25,6 @@ async =
 			require("core.keymaps")
 			-- 插件管理
 			require("core.plugins")
-            require("configs.cmp").config()
             async:close()
         end
     )
