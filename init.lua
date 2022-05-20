@@ -12,30 +12,22 @@ local neovide_config = function()
 	vim.g.neovide_cursor_vfx_particle_density = 5.0
 end
 
-local load_core = function()
-    neovide_config()
-    -- 基础配置
-    require("core.options")
-    -- 快捷键映射
-    require("core.keymaps")
-    -- 插件管理
-    require("core.plugins")
-    require("impatient")
-    -- 主题配置
-    require("core.theme")
-
-    require("configs.cmp").config()
-    require("configs.nvim-tree").config()
-    require("configs.symbols-outline").config()
-    require("configs.lualine").config()
-    require("configs.treesitter").config()
-    require("configs.bufferline").config()
-    require("configs.toggleterm").config()
-    require("configs.indent-blankline").config()
-    require("configs.nvim-autopairs").config()
-    require("configs.fidget").config()
-    require("configs.nvim-notify").config()
-    require("lsp.setup")
-end
-
-load_core()
+-- 基础配置
+require("core.options")
+require("core.theme")
+local async
+async =
+    vim.loop.new_async(
+    vim.schedule_wrap(
+        function()
+            neovide_config()
+			-- 快捷键映射
+			require("core.keymaps")
+			-- 插件管理
+			require("core.plugins")
+            require("configs.cmp").config()
+            async:close()
+        end
+    )
+)
+async:send()
