@@ -1,5 +1,5 @@
-local function load_options()
-    local global_local_options = {
+local settings = {
+    o = {
         termguicolors = true,
         encoding = "UTF-8",
         completeopt = "menu,menuone,noselect,noinsert",
@@ -55,10 +55,10 @@ local function load_options()
         -- 出现错误时发出声音和闪烁
         errorbells = true,
 		visualbell = true,
-    }
+    },
 
 
-    local window_options = {
+    wo = {
         -- 使用相对行号
         number = true,
         relativenumber = true,
@@ -68,21 +68,45 @@ local function load_options()
         signcolumn = "yes",
         -- 右侧参考线，超过表示代码太长了，考虑换行
         colorcolumn = "80",
-    }
+    },
 
-    local buffer_options= {
+    bo = {
 
-    }
+    },
+    disable_builtin_plugins = {
+        "netrw",
+        "netrwPlugin",
+        "netrwSettings",
+        "netrwFileHandlers",
+        "2html_plugin",
+        "getscript",
+        "getscriptPlugin",
+        "gzip",
+        "logipat",
+        "matchit",
+        "tar",
+        "tarPlugin",
+        "rrhelper",
+        "spellfile_plugin",
+        "vimball",
+        "vimballPlugin",
+        "zip",
+        "zipPlugin",
+    },
+}
 
-	for name, value in pairs(global_local_options) do
-		vim.o[name] = value
-	end
-	for name, value in pairs(window_options) do
-		vim.wo[name] = value
-	end
-	for name, value in pairs(buffer_options) do
-		vim.bo[name] = value
-	end
+local function load_options()
+    for prefix, options in pairs(settings) do
+        if prefix ~= "disable_builtin_plugins" then
+            for key, value in pairs(options) do
+                vim[prefix][key] = value
+            end
+        else
+            for _, plugin in pairs(options) do
+                vim.g["loaded_" .. plugin] = 1
+            end
+        end
+    end
 end
 
 load_options()
