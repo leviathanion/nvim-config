@@ -61,6 +61,11 @@ packer.startup(function()
     use {
         'navarasu/onedark.nvim'
     }
+    
+    use {
+        'dstein64/vim-startuptime',
+        cmd = "StartupTime"
+    }
 
     -- 通知弹窗美化
     use {
