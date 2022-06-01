@@ -49,13 +49,11 @@ packer.startup(function()
     --nvim icon
     use {
         'kyazdani42/nvim-web-devicons',
-        after = {"impatient.nvim"},
     }
 
     -- git
     use {
         'airblade/vim-gitgutter',
-        after = {"impatient.nvim"},
     }
 
     -- theme
@@ -65,7 +63,6 @@ packer.startup(function()
 
     use {
         'onsails/lspkind-nvim',
-        after = {"impatient.nvim"},
     }
 
     use {
@@ -121,7 +118,6 @@ packer.startup(function()
     -- toggleterm
     use {
         'akinsho/toggleterm.nvim',
-        after = {"impatient.nvim"},
         config = function()
             require("configs.toggleterm").config()
         end,
@@ -130,7 +126,6 @@ packer.startup(function()
     -- treesitter
     use {
         'nvim-treesitter/nvim-treesitter',
-        after = {"impatient.nvim"},
         config = function()
             require("configs.treesitter").config()
         end,
@@ -139,7 +134,6 @@ packer.startup(function()
     -- file telescope
     use {
        'nvim-telescope/telescope.nvim',
-        after = {"impatient.nvim"},
         requires = {
             {'nvim-lua/plenary.nvim'},
             {'BurntSushi/ripgrep'},
@@ -171,7 +165,6 @@ packer.startup(function()
     -- lsp
     use {
         'williamboman/nvim-lsp-installer',
-        after = {"impatient.nvim"},
         requires = {
             {'hrsh7th/cmp-nvim-lsp'},
             {'neovim/nvim-lspconfig'},

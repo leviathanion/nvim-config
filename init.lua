@@ -13,7 +13,7 @@ local neovide_config = function()
 end
 
 -- 基础配置
-require("core.options")
+require("configs.impatient").config()
 require("core.theme")
 local async
 async =
@@ -21,6 +21,7 @@ async =
     vim.schedule_wrap(
         function()
             neovide_config()
+            require("core.options")
 			-- 快捷键映射
 			require("core.keymaps")
 			-- 插件管理
