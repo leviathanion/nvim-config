@@ -9,8 +9,8 @@ if fn.empty(fn.glob(install_path)) > 0 then
     "clone",
     "--depth",
     "1",
-    user_settings.global_options.useMirror and "https://github.com/wbthomason/packer.nvim"
-        or "https://hub.fastgit.xyz/wbthomason/packer.nvim",
+    user_settings.global_options.useMirror and "https://hub.fastgit.xyz/wbthomason/packer.nvim"
+        or "https://github.com/wbthomason/packer.nvim",
     install_path,
   })
 
@@ -34,8 +34,8 @@ packer.init({
         -- For Chinese users, if the download is slow, you can switch to the github mirror source
         -- replace : https://hub.fastgit.xyz/%s
         -- default_url_format = "https://github.com/%s",
-         default_url_format = user_settings.global_options.useMirror and "https://github.com/%s" 
-                or "https://hub.fastgit.xyz/%s",
+         default_url_format = user_settings.global_options.useMirror and "https://hub.fastgit.xyz/%s" 
+                or "https://github.com/%s",
     },
 })
 
