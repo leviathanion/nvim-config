@@ -1,10 +1,10 @@
-local status, lualine = pcall(require, "lualine")
-if not status then
-  vim.notify("没有找到 lualine")
-  return
-end
 local M = {}
 function M.config()
+    local status, lualine = pcall(require, "lualine")
+    if not status then
+        vim.notify("没有找到 lualine")
+        return
+    end
     -- lualine config
     lualine.setup {
         options = {

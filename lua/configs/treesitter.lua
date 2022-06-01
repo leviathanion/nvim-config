@@ -1,11 +1,11 @@
 local user_settings = require("core.options")
-local status, treesitter = pcall(require, "nvim-treesitter.configs")
-if not status then
-  vim.notify("没有找到 nvim-treesitter")
-  return
-end
 local M = {}
 function M.config()
+    local status, treesitter = pcall(require, "nvim-treesitter.configs")
+    if not status then
+        vim.notify("没有找到 nvim-treesitter")
+        return
+    end
     -- nvim-treesitter config
     if user_settings.global_options.useMirror then
         for _, config in pairs(require("nvim-treesitter.parsers").get_parser_configs()) do
@@ -29,10 +29,10 @@ function M.config()
         incremental_selection = {
             enable = true,
             keymaps = {
-            init_selection = '<CR>',
-            node_incremental = '<CR>',
-            node_decremental = '<BS>',
-            scope_incremental = '<TAB>',
+                init_selection = '<CR>',
+                node_incremental = '<CR>',
+                node_decremental = '<BS>',
+                scope_incremental = '<TAB>',
             }
         }
     }
