@@ -93,20 +93,26 @@ local settings = {
         "zip",
         "zipPlugin",
     },
+    global_options = {
+        useMirror = true,
+    }
 }
 
 local function load_options()
     for prefix, options in pairs(settings) do
-        if prefix ~= "disable_builtin_plugins" then
+        if prefix ~= "disable_builtin_plugins" and prefix ~= "global_options" then
             for key, value in pairs(options) do
                 vim[prefix][key] = value
             end
-        else
-            for _, plugin in pairs(options) do
-                vim.g["loaded_" .. plugin] = 1
+        else if prefix ~= "global_options" then
+                for _, plugin in pairs(options) do
+                    vim.g["loaded_" .. plugin] = 1
+                end
             end
         end
     end
 end
 
 load_options()
+
+return settings

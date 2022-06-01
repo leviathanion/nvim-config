@@ -1,3 +1,4 @@
+local user_settings = require("core.options")
 local status, lsp_installer= pcall(require, "nvim-lsp-installer")
 if not status then
   vim.notify("没有找到 nvim-lsp-installer")
@@ -28,7 +29,16 @@ lsp_installer.settings {
           server_pending = "➜",
           server_uninstalled = "✗"
       }
-  }
+  },
+  github = {
+        -- The template URL to use when downloading assets from GitHub.
+        -- The placeholders are the following (in order):
+        -- 1. The repository (e.g. "rust-lang/rust-analyzer")
+        -- 2. The release version (e.g. "v0.3.0")
+        -- 3. The asset name (e.g. "rust-analyzer-v0.3.0-x86_64-unknown-linux-gnu.tar.gz")
+        download_url_template = user_settings.global_options.useMirror and "https://hub.fastgit.xyz/%s/releases/download/%s/%s"
+            or "https://github.com/%s/releases/download/%s/%s"
+  },
 }
 
 -- Include the servers you want to have installed by default below

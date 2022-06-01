@@ -1,3 +1,4 @@
+local user_settings = require("core.options")
 local status, treesitter = pcall(require, "nvim-treesitter.configs")
 if not status then
   vim.notify("没有找到 nvim-treesitter")
@@ -6,11 +7,16 @@ end
 local M = {}
 function M.config()
     -- nvim-treesitter config
+    if user_settings.global_options.useMirror then
+        for _, config in pairs(require("nvim-treesitter.parsers").get_parser_configs()) do
+            config.install_info.url = config.install_info.url:gsub("https://github.com/", "https://hub.fastgit.xyz/")
+        end
+    end
     treesitter.setup {
         -- ensure_installed = "maintained", -- for installing all maintained parsers
-        ensure_installed = { "c", "cpp", "rust", "lua", "python", "java", "go"}, -- for installing specific parsers
+        ensure_installed = {}, -- for installing specific parsers
         sync_install = true, -- install synchronously
-        ignore_install = { }, -- parsers to not install
+        ignore_install = {}, -- parsers to not install
         highlight = {
             enable = true,
             additional_vim_regex_highlighting = true, -- disable standard vim highlighting
