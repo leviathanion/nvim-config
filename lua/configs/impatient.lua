@@ -5,6 +5,16 @@ function M.config()
         vim.notify("没有找到 impatient")
         return
     end
+    _G.__luacache_config = {
+        chunks = {
+            enable = true,
+            path = vim.fn.stdpath('cache')..'/luacache_chunks',
+        },
+        modpaths = {
+            enable = true,
+            path = vim.fn.stdpath('cache')..'/luacache_modpaths',
+        }
+    }
     require("impatient")
 end
 
