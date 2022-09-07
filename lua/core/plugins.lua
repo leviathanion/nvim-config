@@ -69,6 +69,12 @@ packer.startup(function()
         'dstein64/vim-startuptime',
         cmd = "StartupTime"
     }
+    use {
+        'williamboman/mason.nvim',
+        config = function()
+            require("configs.mason").config()
+        end,
+    }
 
     -- 通知弹窗美化
     use {
@@ -161,27 +167,37 @@ packer.startup(function()
 
     -- copilot
     -- use 'github/copilot.nvim'
-
+    use {
+        "zbirenbaum/copilot.lua", 
+        event = {"VimEnter"},
+        config = function()
+            vim.defer_fn(function()
+            require("copilot").setup()
+            end, 100)
+        end,
+    }
     -- lsp
     use {
-        'williamboman/nvim-lsp-installer',
+        'williamboman/mason-lspconfig.nvim',
         requires = {
             {'hrsh7th/cmp-nvim-lsp'},
             {'neovim/nvim-lspconfig'},
+            {'williamboman/mason.nvim'},
         },
         config = function()
             require("lsp.setup")
+            require("lspconfig.setup")
         end,
     }
+
     -- lsp进度提示
     use {
         'j-hui/fidget.nvim',
-        after = {"nvim-lsp-installer"},
+        after = {"mason.nvim"},
         config = function()
             require("configs.fidget").config()
         end
     }
- 
     --completion
     use {
         'rafamadriz/friendly-snippets',
@@ -219,6 +235,10 @@ packer.startup(function()
         'hrsh7th/cmp-nvim-lsp-signature-help',
         after = {"nvim-cmp"}
     }
+    use {"zbirenbaum/copilot-cmp",
+        module = "copilot_cmp",
+        after = {"nvim-cmp","copilot.lua"}
+    }
     -- latex support
     use {
         'kdheepak/cmp-latex-symbols',
@@ -232,7 +252,6 @@ packer.startup(function()
             require("configs.nvim-autopairs").config()
         end
     }
-
 
     if paccker_bootstrap then
       packer.sync()

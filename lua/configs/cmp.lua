@@ -42,6 +42,7 @@ function M.config()
             { name = 'latex_symbols' },
             { name = 'nvim_lua' },
             { name = 'nvim_lsp_signature_help' },
+            { name = 'copilot' }
         }, {{ name = 'buffer' },
             { name = 'path'   }})
     })
