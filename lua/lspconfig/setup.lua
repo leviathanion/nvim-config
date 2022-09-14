@@ -33,8 +33,8 @@ mason_lspconfig.setup_handlers {
     -- Next, you can provide targeted overrides for specific servers.
     -- For example, a handler override for the `rust_analyzer`:
     ["pyright"] = function ()
-        opts = require("lspconfig.pyright"),
-        lspconfig.pyright.setup {opts}
+        opts = require("lspconfig.pyright")
+        lspconfig.pyright.setup(opts)
     end,
 
     ["sumneko_lua"] = function ()
