@@ -94,7 +94,7 @@ local settings = {
         "zipPlugin",
     },
     global_options = {
-        useMirror = false,
+        useMirror = true,
     }
 }
 

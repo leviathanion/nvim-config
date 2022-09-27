@@ -37,6 +37,11 @@ packer.init({
          default_url_format = user_settings.global_options.useMirror and "https://hub.fastgit.xyz/%s" 
                 or "https://github.com/%s",
     },
+    display = {
+        open_fn = function()
+            return require('packer.util').float({ border = 'single' })
+        end
+    }
 })
 
 packer.startup(function()
