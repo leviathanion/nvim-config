@@ -9,7 +9,7 @@ function M.config()
     -- nvim-treesitter config
     if user_settings.global_options.useMirror then
         for _, config in pairs(require("nvim-treesitter.parsers").get_parser_configs()) do
-            config.install_info.url = config.install_info.url:gsub("https://github.com/", "https://hub.fastgit.xyz/")
+            config.install_info.url = config.install_info.url:gsub("https://github.com/", "https://github.leviathanion.workers.dev/")
         end
     end
     treesitter.setup {
