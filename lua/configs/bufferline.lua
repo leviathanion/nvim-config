@@ -82,6 +82,11 @@ function M.config()
             separator_style = "slant",
             enforce_regular_tabs = false,
             always_show_bufferline = true,
+            hover = {
+                enabled = true,
+                delay = 200,
+                reveal = {'close'}
+            },
             sort_by ='insert_at_end'
             -- add custom logic
         }
