@@ -48,7 +48,6 @@ packer.startup(function()
     use 'wbthomason/packer.nvim'
 
     -- speed up startup
-    use 'nathom/filetype.nvim'
     use 'lewis6991/impatient.nvim'
 
     --nvim icon
