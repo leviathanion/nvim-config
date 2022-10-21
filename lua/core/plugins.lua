@@ -170,13 +170,13 @@ packer.startup(function()
     }
 
     -- copilot
-    -- use 'github/copilot.nvim'
+    -- use 'github/copilot.vim'
     use {
         "zbirenbaum/copilot.lua", 
         event = {"VimEnter"},
         config = function()
             vim.defer_fn(function()
-            require("copilot").setup()
+                require("copilot").setup()
             end, 100)
         end,
     }
@@ -241,7 +241,10 @@ packer.startup(function()
     }
     use {"zbirenbaum/copilot-cmp",
         module = "copilot_cmp",
-        after = {"nvim-cmp","copilot.lua"}
+        after = {"nvim-cmp","copilot.lua"},
+        config = function ()
+            require("copilot_cmp").setup()
+        end
     }
     -- latex support
     use {
