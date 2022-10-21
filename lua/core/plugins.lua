@@ -256,6 +256,15 @@ packer.startup(function()
             require("configs.nvim-autopairs").config()
         end
     }
+    -- docstring
+    use {
+        "danymat/neogen",
+        event = "BufRead",
+        config = function()
+            require('neogen').setup {}
+        end,
+        requires = "nvim-treesitter/nvim-treesitter",
+    }
 
     if paccker_bootstrap then
       packer.sync()
