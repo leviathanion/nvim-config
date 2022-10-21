@@ -10,9 +10,9 @@ function M.config()
             -- REQUIRED - you must specify a snippet engine
             expand = function(args)
             -- luasnip
-            -- require('luasnip').lsp_expand(args.body)
+            require('luasnip').lsp_expand(args.body)
             -- vsnip
-            vim.fn["vsnip#anonymous"](args.body)
+            -- vim.fn["vsnip#anonymous"](args.body)
             -- snippy
             -- require('snippy').expand_snippet(args.body)
             -- ultisnip
@@ -35,8 +35,8 @@ function M.config()
         },
         sources = cmp.config.sources({
             { name = 'nvim_lsp' },
-            { name = 'vsnip' },
-            -- { name = 'luasnip' }, -- For luasnip users.
+            -- { name = 'vsnip' },
+            { name = 'luasnip' }, -- For luasnip users.
             -- { name = 'ultisnips' }, -- For ultisnips users.
             -- { name = 'snippy' }, -- For snippy users.
             { name = 'latex_symbols' },

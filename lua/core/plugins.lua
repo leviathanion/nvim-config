@@ -208,13 +208,13 @@ packer.startup(function()
         event = { "InsertEnter", "CmdlineEnter" },
     }
     use{
-        'hrsh7th/vim-vsnip',
+        'L3MON4D3/LuaSnip',
         ptp = "viml",
         after = { "friendly-snippets" },
     }
     use {
         'hrsh7th/nvim-cmp',
-        after = { "vim-vsnip", "lspkind-nvim" },
+        after = { "LuaSnip", "lspkind-nvim" },
         config = function()
             require("configs.cmp").config()
         end
