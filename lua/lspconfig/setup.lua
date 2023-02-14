@@ -12,7 +12,7 @@ end
 
 mason_lspconfig.setup({
     ensure_installer = {
-        "pyright","sumneko_lua","html"
+        "pyright","lua_ls","html"
     },
 })
 
@@ -37,8 +37,8 @@ mason_lspconfig.setup_handlers {
         lspconfig.pyright.setup(opts)
     end,
 
-    ["sumneko_lua"] = function ()
-        lspconfig.sumneko_lua.setup {}
+    ["lua_ls"] = function ()
+        lspconfig.lua_ls.setup {}
     end,
 
     ["html"] = function ()
