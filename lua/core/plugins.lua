@@ -1,150 +1,132 @@
 local user_settings = require("core.options")
 local fn = vim.fn
-local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
-local paccker_bootstrap
-if fn.empty(fn.glob(install_path)) > 0 then
-  vim.notify("正在安装Packer.nvim，请稍后...")
-  paccker_bootstrap = fn.system({
+local install_path = fn.stdpath("data") .. "/lazy/lazy.nvim"
+local lazy_bootstrap
+if not vim.loop.fs_stat(install_path) then
+--  vim.notify("正在安装Lazy.nvim，请稍后...")
+  lazy_bootstrap = fn.system({
     "git",
     "clone",
-    "--depth",
-    "1",
-    user_settings.global_options.useMirror and "https://github.leviathanion.workers.dev/wbthomason/packer.nvim"
-        or "https://github.com/wbthomason/packer.nvim",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable",
     install_path,
   })
-
-  -- https://github.com/wbthomason/packer.nvim/issues/750
-  local rtp_addition = vim.fn.stdpath("data") .. "/site/pack/*/start/*"
-  if not string.find(vim.o.runtimepath, rtp_addition) then
-    vim.o.runtimepath = rtp_addition .. "," .. vim.o.runtimepath
-  end
-  vim.notify("Packer.nvim 安装完毕")
 end
-
+vim.opt.rtp:prepend(install_path)
 -- Use a protected call so we don't error out on first use
-local status_ok, packer = pcall(require, "packer")
+local status_ok, lazy = pcall(require, "lazy")
 if not status_ok then
-  vim.notify("没有安装 Packer.nvim")
+  vim.notify("没有安装 lazy.nvim")
   return
 end
 
-packer.init({
-    git = {
-        -- For Chinese users, if the download is slow, you can switch to the github mirror source
-        -- replace : https://hub.fastgit.xyz/%s
-        -- default_url_format = "https://github.com/%s",
-         default_url_format = user_settings.global_options.useMirror and "https://github.leviathanion.workers.dev/%s" 
-                or "https://github.com/%s",
-    },
-    display = {
-        open_fn = function()
-            return require('packer.util').float({ border = 'single' })
-        end
-    }
-})
+-- lazy.init({
+--     git = {
+--         -- For Chinese users, if the download is slow, you can switch to the github mirror source
+--         -- replace : https://hub.fastgit.xyz/%s
+--         -- default_url_format = "https://github.com/%s",
+--          default_url_format = user_settings.global_options.useMirror and "https://github.leviathanion.workers.dev/%s" 
+--                 or "https://github.com/%s.git",
+--     },
+-- })
 
-packer.startup(function()
-    use 'wbthomason/packer.nvim'
-
-    -- speed up startup
-    use 'lewis6991/impatient.nvim'
-
+lazy.setup({
     --nvim icon
-    use {
+    {
         'kyazdani42/nvim-web-devicons',
-    }
+    },
 
     -- git
-    use {
+    {
         'airblade/vim-gitgutter',
-    }
+    },
 
     -- theme
-    use {
+    {
         'navarasu/onedark.nvim'
-    }
+    },
 
-    use {
+    {
         'onsails/lspkind-nvim',
-    }
+    },
 
-    use {
+    {
         'dstein64/vim-startuptime',
         cmd = "StartupTime"
-    }
-    use {
+    },
+    {
         'williamboman/mason.nvim',
         config = function()
             require("configs.mason").config()
         end,
-    }
+    },
 
     -- 通知弹窗美化
-    use {
+    {
         'rcarriga/nvim-notify',
-        after = {"nvim-web-devicons"},
+        dependencies = {"nvim-web-devicons"},
         config = function()
             require("configs.nvim-notify").config()
         end,
-    }
+    },
 
     -- bufferline
-    use {
+    {
         'akinsho/bufferline.nvim',
-        after = {"nvim-web-devicons"},
+        dependencies = {"nvim-web-devicons"},
         config = function()
             require("configs.bufferline").config()
         end,
-    }
+    },
 
     -- status line
-    use {
+    {
         'nvim-lualine/lualine.nvim',
-        after = {"nvim-web-devicons", "vim-gitgutter"},
+        dependencies = {"nvim-web-devicons", "vim-gitgutter"},
         config = function()
             require("configs.lualine").config()
         end,
-    }
+    },
 
     -- file tree
-    use {
+    {
         'kyazdani42/nvim-tree.lua',
         cmd = {"NvimTreeToggle"},
         config = function()
             require("configs.nvim-tree").config()
         end,
-    }
+    },
 
     -- tagbar
-    use {
+    {
         'simrat39/symbols-outline.nvim',
         cmd = {"SymbolsOutline"},
         config = function()
             require("configs.symbols-outline").config()
         end,
-    }
+    },
 
     -- toggleterm
-    use {
+    {
         'akinsho/toggleterm.nvim',
         config = function()
             require("configs.toggleterm").config()
         end,
-    }
+    },
 
     -- treesitter
-    use {
+    {
         'nvim-treesitter/nvim-treesitter',
         config = function()
             require("configs.treesitter").config()
         end,
-    }
+    },
 
     -- file telescope
-    use {
+    {
        'nvim-telescope/telescope.nvim',
-        requires = {
+        dependencies = {
             {'nvim-lua/plenary.nvim'},
             {'BurntSushi/ripgrep'},
             {'nvim-lua/popup.nvim'}
@@ -152,26 +134,26 @@ packer.startup(function()
         config = function()
             require("configs.telescope").config()
         end,
-    }
+    },
 
     -- vim-sandwich
-    use {
+    {
         'machakann/vim-sandwich',
         event = {"BufRead"},
-    }
+    },
 
     -- indent info
-    use {
+    {
         'lukas-reineke/indent-blankline.nvim',
         event = {"BufRead"},
         config = function()
             require("configs.indent-blankline").config()
         end,
-    }
+    },
 
     -- copilot
     -- use 'github/copilot.vim'
-    use {
+    {
         "zbirenbaum/copilot.lua", 
         event = {"VimEnter"},
         config = function()
@@ -179,11 +161,11 @@ packer.startup(function()
                 require("copilot").setup()
             end, 100)
         end,
-    }
+    },
     -- lsp
-    use {
+    {
         'williamboman/mason-lspconfig.nvim',
-        requires = {
+        dependencies = {
             {'hrsh7th/cmp-nvim-lsp'},
             {'neovim/nvim-lspconfig'},
             {'williamboman/mason.nvim'},
@@ -192,86 +174,81 @@ packer.startup(function()
             require("lsp.setup")
             require("lspconfig.setup")
         end,
-    }
+    },
 
     -- lsp进度提示
-    use {
+    {
         'j-hui/fidget.nvim',
-        after = {"mason.nvim"},
+        dependencies = {"mason.nvim"},
         config = function()
             require("configs.fidget").config()
         end
-    }
+    },
     --completion
-    use {
+    {
         'rafamadriz/friendly-snippets',
         event = { "InsertEnter", "CmdlineEnter" },
-    }
-    use{
+    },
+    {
         'L3MON4D3/LuaSnip',
         ptp = "viml",
-        after = { "friendly-snippets" },
-    }
-    use {
+        dependencies = { "friendly-snippets" },
+    },
+    {
         'hrsh7th/nvim-cmp',
-        after = { "LuaSnip", "lspkind-nvim" },
+        dependencies = { "LuaSnip", "lspkind-nvim" },
         config = function()
             require("configs.cmp").config()
         end
-    }
-    use {
+    },
+    {
         'hrsh7th/cmp-buffer',
-        after = {"nvim-cmp"}
-    }
-    use {
+        dependencies = {"nvim-cmp"}
+    },
+    {
         'hrsh7th/cmp-path',
-        after = {"nvim-cmp"}
-    }
-    use {
+        dependencies = {"nvim-cmp"}
+    },
+    {
         'hrsh7th/cmp-cmdline',
-        after = {"nvim-cmp"}
-    }
-    use {
+        dependencies = {"nvim-cmp"}
+    },
+    {
         'hrsh7th/cmp-nvim-lua',
-        after = {"nvim-cmp"}
-    }
-    use {
+        dependencies = {"nvim-cmp"}
+    },
+    {
         'hrsh7th/cmp-nvim-lsp-signature-help',
-        after = {"nvim-cmp"}
-    }
-    use {"zbirenbaum/copilot-cmp",
+        dependencies = {"nvim-cmp"}
+    },
+    {"zbirenbaum/copilot-cmp",
         module = "copilot_cmp",
-        after = {"nvim-cmp","copilot.lua"},
+        dependencies = {"nvim-cmp","copilot.lua"},
         config = function ()
             require("copilot_cmp").setup()
         end
-    }
+    },
     -- latex support
-    use {
+    {
         'kdheepak/cmp-latex-symbols',
-        after = {"nvim-cmp"}
-    }
+        dependencies = {"nvim-cmp"}
+    },
     -- autopairs
-    use {
+    {
         'windwp/nvim-autopairs',
         event = "InsertEnter",
         config = function()
             require("configs.nvim-autopairs").config()
         end
-    }
+    },
     -- docstring
-    use {
+    {
         "danymat/neogen",
         event = "BufRead",
         config = function()
             require('neogen').setup {}
         end,
-        requires = "nvim-treesitter/nvim-treesitter",
-    }
+        dependencies = "nvim-treesitter/nvim-treesitter",
+    },
+})
 
-    if paccker_bootstrap then
-      packer.sync()
-    end
-end)
-
-return packer

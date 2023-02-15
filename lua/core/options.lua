@@ -95,6 +95,7 @@ local settings = {
     },
     global_options = {
         useMirror = false,
+        mirrorURL = "https://hub.fgit.gq/"
     }
 }
 
