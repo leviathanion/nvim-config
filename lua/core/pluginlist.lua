@@ -9,6 +9,13 @@ local pluginlist = {
     },
 
     {
+        "goolord/alpha-nvim",
+        config = function ()
+            require("configs.alpha").config()
+        end
+    },
+
+    {
         "williamboman/mason.nvim",
         config = function()
             require("configs.mason").config()
