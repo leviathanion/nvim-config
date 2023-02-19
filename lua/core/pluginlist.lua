@@ -217,6 +217,17 @@ local pluginlist = {
         dependencies = {
             {"nvim-treesitter/nvim-treesitter"},
         }
+    },
+
+    {
+        "iamcco/markdown-preview.nvim",
+        lazy = true,
+        cmd = {"MarkdownPreview", "MarkdownPreviewStop", "MarkdownPreviewToggle"},
+        ft = {"markdown"},
+        build = "cd app && npm install",
+        init = function()
+            vim.g.mkdp_filetypes = { "markdown" }
+        end
     }
 }
 return pluginlist
