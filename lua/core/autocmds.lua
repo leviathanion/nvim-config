@@ -52,3 +52,11 @@ autocmd("BufEnter", {
             + "r" -- But do continue when pressing enter.
     end,
 })
+
+autocmd({ "InsertLeave", "BufLeave" }, {
+    group = myAutoGroup,
+    pattern = "*",
+    callback = function()
+        vim.api.nvim_command("silent !fcitx5-remote -c")
+    end,
+})
