@@ -53,6 +53,14 @@ autocmd("BufEnter", {
     end,
 })
 
+autocmd({ "InsertEnter" }, {
+    group = myAutoGroup,
+    pattern = { "*.md" },
+    callback = function()
+        vim.api.nvim_command("silent !fcitx5-remote -o")
+    end,
+})
+
 autocmd({ "InsertLeave", "BufLeave" }, {
     group = myAutoGroup,
     pattern = "*",
