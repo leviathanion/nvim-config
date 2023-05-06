@@ -8,6 +8,8 @@ function M.config()
     bufferline.setup {
         options = {
             mode = "buffers", -- set to "tabs" to only show tabpages instead
+            style_preset = bufferline.style_preset.default,
+            themable = true,  -- allows highlight groups to be overriden i.e. sets highlights as default
             numbers = "ordinal",
             --- @deprecated, please specify numbers as a function to customize the styling
             close_command = "bdelete! %d",       -- can be a string | function, see "Mouse actions"
@@ -19,9 +21,9 @@ function M.config()
             -- as an escape hatch for people who cannot bear it for whatever reason
             indicator = {
                 icon = '▎', -- this should be omitted if indicator style is not 'icon'
-                style = 'icon' ,
+                style = 'icon',
             },
-            buffer_close_icon = '',
+            buffer_close_icon = '󰅖',
             modified_icon = '●',
             close_icon = '',
             left_trunc_marker = '',
@@ -30,7 +32,7 @@ function M.config()
             --- Please note some names can/will break the
             --- bufferline so use this at your discretion knowing that it has
             --- some limitations that will *NOT* be fixed.
-            name_formatter = function(buf)  -- buf contains a "name", "path" and "bufnr"
+            name_formatter = function(buf) -- buf contains a "name", "path" and "bufnr"
                 -- remove extension from markdown files for example
                 if buf.name:match('%.md') then
                     return vim.fn.fnamemodify(buf.name, ':t:r')
@@ -69,8 +71,8 @@ function M.config()
             --    return true
             --end
             -- end,
-            offsets = {{filetype = "NvimTree", text = "File Explorer" , text_align ="left", highlights = "Directory"}},
-            color_icons = true, -- whether or not to add the filetype icon highlights
+            offsets = { { filetype = "NvimTree", text = "File Explorer", text_align = "left", highlights = "Directory" } },
+            color_icons = true,       -- whether or not to add the filetype icon highlights
             show_buffer_icons = true, -- disable filetype icons for buffers
             show_buffer_close_icons = true,
             -- show_buffer_default_icon = true, -- whether or not an unrecognised filetype should show a default icon
@@ -85,11 +87,12 @@ function M.config()
             hover = {
                 enabled = true,
                 delay = 200,
-                reveal = {'close'}
+                reveal = { 'close' }
             },
-            sort_by ='insert_at_end'
+            sort_by = 'insert_at_end'
             -- add custom logic
         }
     }
 end
+
 return M
