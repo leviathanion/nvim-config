@@ -183,7 +183,7 @@ local pluginlist = {
         event = {"InsertEnter"},
         config = function()
             vim.defer_fn(function()
-                require("copilot").setup()
+                require("configs.copilot").config()
             end, 100)
         end,
         dependencies = {
