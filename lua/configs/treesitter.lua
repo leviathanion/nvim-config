@@ -1,7 +1,7 @@
 local user_settings = require("core.options")
 local M = {}
 function M.config()
-    local status, treesitter = pcall(require, "nvim-treesitter.configs")
+    local status, treesitter = pcall(require, "nvim-treesitter")
     if not status then
         vim.notify("没有找到 nvim-treesitter")
         return
