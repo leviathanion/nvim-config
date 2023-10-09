@@ -10,7 +10,7 @@ local pluginlist = {
 
     {
         "goolord/alpha-nvim",
-        config = function ()
+        config = function()
             require("configs.alpha").config()
         end
     },
@@ -22,12 +22,27 @@ local pluginlist = {
         end,
     },
 
+    -- 快捷键展示
+    {
+        "folke/which-key.nvim",
+        event = "VeryLazy",
+        init = function()
+            vim.o.timeout = true
+            vim.o.timeoutlen = 300
+        end,
+        opts = {
+            -- your configuration comes here
+            -- or leave it empty to use the default settings
+            -- refer to the configuration section below
+        }
+    },
+
     -- 通知弹窗美化
     {
         "rcarriga/nvim-notify",
         dependencies = {
             --nvim icon
-            { "kyazdani42/nvim-web-devicons"}
+            { "kyazdani42/nvim-web-devicons" }
         },
         config = function()
             require("configs.nvim-notify").config()
@@ -38,9 +53,9 @@ local pluginlist = {
     {
         "akinsho/bufferline.nvim",
         lazy = true,
-        event = {"VimEnter"},
+        event = { "VimEnter" },
         dependencies = {
-            { "kyazdani42/nvim-web-devicons"},
+            { "kyazdani42/nvim-web-devicons" },
         },
         config = function()
             require("configs.bufferline").config()
@@ -51,9 +66,9 @@ local pluginlist = {
     {
         "nvim-lualine/lualine.nvim",
         lazy = true,
-        event = {"BufReadPost", "BufAdd", "BufNewFile"},
+        event = { "BufReadPost", "BufAdd", "BufNewFile" },
         dependencies = {
-            { "kyazdani42/nvim-web-devicons"},
+            { "kyazdani42/nvim-web-devicons" },
             -- git
             { "airblade/vim-gitgutter" },
         },
@@ -66,7 +81,7 @@ local pluginlist = {
     {
         "kyazdani42/nvim-tree.lua",
         lazy = true,
-        cmd = {"NvimTreeToggle"},
+        cmd = { "NvimTreeToggle" },
         config = function()
             require("configs.nvim-tree").config()
         end,
@@ -75,8 +90,8 @@ local pluginlist = {
     -- tagbar
     {
         "simrat39/symbols-outline.nvim",
-        lazy  = true,
-        cmd = {"SymbolsOutline"},
+        lazy   = true,
+        cmd    = { "SymbolsOutline" },
         config = function()
             require("configs.symbols-outline").config()
         end,
@@ -94,7 +109,7 @@ local pluginlist = {
     {
         "nvim-treesitter/nvim-treesitter",
         lazy = true,
-        event = {"BufReadPost", "BufNewFile"},
+        event = { "BufReadPost", "BufNewFile" },
         config = function()
             require("configs.treesitter").config()
         end,
@@ -104,11 +119,11 @@ local pluginlist = {
     {
         "nvim-telescope/telescope.nvim",
         lazy = true,
-        cmd = {"Telescope"},
+        cmd = { "Telescope" },
         dependencies = {
-            {"nvim-lua/plenary.nvim"},
-            {"BurntSushi/ripgrep"},
-            {"nvim-lua/popup.nvim"}
+            { "nvim-lua/plenary.nvim" },
+            { "BurntSushi/ripgrep" },
+            { "nvim-lua/popup.nvim" }
         },
         config = function()
             require("configs.telescope").config()
@@ -119,14 +134,14 @@ local pluginlist = {
     {
         "machakann/vim-sandwich",
         lazy = true,
-        event = {"BufReadPost", "BufNewFile"},
+        event = { "BufReadPost", "BufNewFile" },
     },
 
     -- indent info
     {
         "lukas-reineke/indent-blankline.nvim",
         lazy = true,
-        event = {"BufReadPost"},
+        event = { "BufReadPost" },
         config = function()
             require("configs.indent-blankline").config()
         end,
@@ -146,9 +161,9 @@ local pluginlist = {
             {
                 "williamboman/mason-lspconfig.nvim",
                 dependencies = {
-                    {"hrsh7th/cmp-nvim-lsp"},
-                    {"neovim/nvim-lspconfig"},
-                    {"williamboman/mason.nvim"},
+                    { "hrsh7th/cmp-nvim-lsp" },
+                    { "neovim/nvim-lspconfig" },
+                    { "williamboman/mason.nvim" },
                     -- lsp进度提示
                     {
                         "j-hui/fidget.nvim",
@@ -180,7 +195,7 @@ local pluginlist = {
     {
         "zbirenbaum/copilot.lua",
         lazy = true,
-        event = {"InsertEnter"},
+        event = { "InsertEnter" },
         config = function()
             vim.defer_fn(function()
                 require("configs.copilot").config()
@@ -190,8 +205,8 @@ local pluginlist = {
             {
                 "zbirenbaum/copilot-cmp",
                 module = "copilot_cmp",
-                dependencies = {"nvim-cmp"},
-                config = function ()
+                dependencies = { "nvim-cmp" },
+                config = function()
                     require("copilot_cmp").setup()
                 end
             },
@@ -215,15 +230,15 @@ local pluginlist = {
             require("neogen").setup {}
         end,
         dependencies = {
-            {"nvim-treesitter/nvim-treesitter"},
+            { "nvim-treesitter/nvim-treesitter" },
         }
     },
 
     {
         "iamcco/markdown-preview.nvim",
         lazy = true,
-        cmd = {"MarkdownPreview", "MarkdownPreviewStop", "MarkdownPreviewToggle"},
-        ft = {"markdown"},
+        cmd = { "MarkdownPreview", "MarkdownPreviewStop", "MarkdownPreviewToggle" },
+        ft = { "markdown" },
         build = "cd app && npm install",
         init = function()
             vim.g.mkdp_filetypes = { "markdown" }
