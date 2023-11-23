@@ -16,6 +16,7 @@ function M.config()
                 jump_next = "]]",
                 accept = "<CR>",
                 refresh = "gr",
+                open = "<C-CR>"
             },
             layout = {
                 position = "bottom", -- | top | left | right
@@ -37,7 +38,7 @@ function M.config()
         },
         filetypes = {
             yaml = false,
-            markdown = false,
+            markdown = true,
             help = false,
             gitcommit = false,
             gitrebase = false,
