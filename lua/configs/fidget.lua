@@ -7,7 +7,8 @@ function M.config()
         return
     end
     fidget.setup {
-        blend = 0,
+        --        blend = 0,
     }
 end
+
 return M
