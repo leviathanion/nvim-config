@@ -8,31 +8,31 @@ function M.config()
     end
     copilot.setup {
         panel = {
-            enabled = false,
-            auto_refresh = false,
+            enabled = true,
+            auto_refresh = true,
+
             keymap = {
-            jump_prev = "[[",
-            jump_next = "]]",
-            accept = "<CR>",
-            refresh = "gr",
-            open = "<A-CR>"
+                jump_prev = "[[",
+                jump_next = "]]",
+                accept = "<CR>",
+                refresh = "gr",
             },
             layout = {
-            position = "bottom", -- | top | left | right
-            ratio = 0.4
+                position = "bottom", -- | top | left | right
+                ratio = 0.4
             },
         },
         suggestion = {
             enabled = false,
-            auto_trigger = true,
+            auto_trigger = false,
             debounce = 75,
             keymap = {
-            accept = "<M-l>",
-            accept_word = false,
-            accept_line = false,
-            next = "<M-]>",
-            prev = "<M-[>",
-            dismiss = "<C-]>",
+                accept = "<M-l>",
+                accept_word = false,
+                accept_line = false,
+                next = "<M-]>",
+                prev = "<M-[>",
+                dismiss = "<C-]>",
             },
         },
         filetypes = {
@@ -50,4 +50,5 @@ function M.config()
         server_opts_overrides = {},
     }
 end
+
 return M
