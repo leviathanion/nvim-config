@@ -221,6 +221,16 @@ local pluginlist = {
             require("configs.nvim-autopairs").config()
         end
     },
+
+    {
+        'numToStr/Comment.nvim',
+        lazy = false,
+        event = "InsertEnter",
+        config = function()
+            require("configs.Comment").config()
+        end
+    },
+
     -- docstring
     {
         "danymat/neogen",
