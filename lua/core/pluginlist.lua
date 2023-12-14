@@ -212,6 +212,22 @@ local pluginlist = {
             },
         }
     },
+
+
+    -- Lazy
+    {
+        "jackMort/ChatGPT.nvim",
+        event = "VeryLazy",
+        config = function()
+            require("configs.chatgpt").config()
+        end,
+        dependencies = {
+            "MunifTanjim/nui.nvim",
+            "nvim-lua/plenary.nvim",
+            "nvim-telescope/telescope.nvim"
+        }
+    },
+
     -- autopairs
     {
         "windwp/nvim-autopairs",

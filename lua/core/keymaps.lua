@@ -23,6 +23,7 @@ mapcmd('<leader>fr', "Telescope oldfiles")
 mapcmd('<leader>fb', "Telescope buffers")
 maplua('<leader>fn', "require('telescope').extensions.notify.notify()")
 
+
 -- s: split
 mapkey('n', '<A-=>', '<c-w>+')
 mapkey('n', '<A-->', '<c-w>-')
@@ -37,12 +38,9 @@ mapcmd('<leader>sv', 'vs')
 mapcmd('<C-h>', 'BufferLineCyclePrev<CR>')
 mapcmd('<C-l>', 'BufferLineCycleNext<CR>')
 
-
-
-
 -- l/g/w: language
 -- l: general
--- g: goto
+-- lg: goto
 -- w: workspace
 -- o: open
 maplua('<leader>lo', 'vim.diagnostic.open_float()')
@@ -52,15 +50,14 @@ maplua('<leader>lr', 'vim.lsp.buf.rename()')
 maplua('<leader>lh', 'vim.lsp.buf.signature_help()')
 maplua('<leader>la', 'vim.lsp.buf.code_action()')
 maplua('<leader>lf', 'vim.lsp.buf.format()')
-maplua('<leader>lgd', "require('neogen').generate()")
 
-maplua('<leader>gD', 'vim.lsp.buf.declaration()')
-maplua('<leader>gd', 'vim.lsp.buf.definition()')
-maplua('<leader>gt', 'vim.lsp.buf.type_definition()')
-maplua('<leader>gi', 'vim.lsp.buf.implementation()')
-maplua('<leader>gp', 'vim.diagnostic.goto_prev()')
-maplua('<leader>gn', 'vim.diagnostic.goto_next()')
-maplua('<leader>gr', 'vim.lsp.buf.references()')
+maplua('<leader>lgD', 'vim.lsp.buf.declaration()')
+maplua('<leader>lgd', 'vim.lsp.buf.definition()')
+maplua('<leader>lgt', 'vim.lsp.buf.type_definition()')
+maplua('<leader>lgi', 'vim.lsp.buf.implementation()')
+maplua('<leader>lgp', 'vim.diagnostic.goto_prev()')
+maplua('<leader>lgn', 'vim.diagnostic.goto_next()')
+maplua('<leader>lgr', 'vim.lsp.buf.references()')
 
 maplua('<leader>wa', 'vim.lsp.buf.add_workspace_folder()')
 maplua('<leader>wr', 'vim.lsp.buf.remove_workspace_folder()')
@@ -68,6 +65,73 @@ maplua('<leader>wl', 'print(vim.inspect(vim.lsp.buf.list_workspace_folders()))')
 
 mapcmd('<leader>ob', 'SymbolsOutline')
 mapcmd('<leader>oc', 'Copilot panel')
+mapcmd('<leader>oCc', 'ChatGPT')
+mapcmd('<leader>oCp', 'ChatGPTActAs')
+
 
 -- toggleterm
 mapkey('t', '<esc>', [[<C-\><C-n>]])
+
+-- g: generate
+maplua('<leader>gd', "require('neogen').generate()")
+
+local wk = require("which-key")
+wk.register({
+    ["<leader>f"] = {
+        name = "telescope",
+        f = "find files",
+        g = "grep",
+        r = "recent file",
+        b = "buffer",
+        n = "notify"
+    },
+    ["<leader>l"] = {
+        name = "language",
+        g = {
+            name = "goto",
+            D = "declaration",
+            d = "definition",
+            t = "type_definition",
+            i = "implementation",
+            p = "prev",
+            n = "next",
+            r = "references"
+        },
+        o = "open float",
+        q = "setloclist",
+        d = "hover",
+        r = "rename",
+        h = "signature_help",
+        a = "code_action",
+        f = "format"
+    },
+    ["<leader>s"] = {
+        name = "split",
+        c = "close this window",
+        o = "close other window",
+        h = "split horizontal",
+        v = "split vertical"
+    },
+    ["<leader>w"] = {
+        name = "workspace",
+        a = "add",
+        r = "remove",
+        l = "list"
+    },
+    ["<leader>o"] = {
+        name = "open",
+        b = "sysmbols outline",
+        c = "copilot panel",
+    },
+    ["<leader>g"] = {
+        name = "generate",
+        d = "docstring"
+    },
+    ["<leader>oC"] = {
+        name = "ChatGPT",
+        c = "ChatGPT",
+        p = "prompt"
+    },
+
+
+})
