@@ -28,10 +28,10 @@ function M.config()
     dashboard.section.header.opts.hl = "Type"
     dashboard.section.buttons.val = {
         dashboard.button("SPC c n", "  New file", ":ene <BAR> startinsert <CR>"),
-        dashboard.button("SPC f f", "  Find file", ":Telescope find_files<CR>"),
-        dashboard.button("SPC f r", "  Recent", ":Telescope oldfiles<CR>"),
+        dashboard.button("SPC f f", "󰈞  Find file", ":Telescope find_files<CR>"),
+        dashboard.button("SPC f r", "󰋚  Recent", ":Telescope oldfiles<CR>"),
         dashboard.button("SPC f g", "  Find word", ":Telescope live_grep<CR>"),
-        dashboard.button("q", "  Quit NVIM", ":qa<CR>"),
+        dashboard.button("q", "󰿅  Quit NVIM", ":qa<CR>"),
     }
     local function footer()
         local stats = require("lazy").stats()
@@ -51,15 +51,17 @@ function M.config()
     end
     dashboard.section.footer.val = footer()
     dashboard.section.footer.opts.hl = "Function"
-    local head_butt_padding = 1
+    local head_butt_padding = 2
     local occu_height = #dashboard.section.header.val + 2 * #dashboard.section.buttons.val + head_butt_padding
     local header_padding = math.max(0, math.ceil((vim.fn.winheight("$") - occu_height) * 0.25))
+    local foot_butt_padding = 1
 
     dashboard.config.layout = {
         { type = "padding", val = header_padding },
         dashboard.section.header,
         { type = "padding", val = head_butt_padding },
         dashboard.section.buttons,
+        { type = "padding", val = foot_butt_padding },
         dashboard.section.footer,
     }
 
