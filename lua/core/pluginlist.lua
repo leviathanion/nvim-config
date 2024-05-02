@@ -159,6 +159,13 @@ local pluginlist = {
             {
                 "L3MON4D3/LuaSnip",
                 dependencies = { "rafamadriz/friendly-snippets" },
+                config = function()
+                    require("configs.luasnip").config()
+                end
+            },
+
+            {
+                "saadparwaiz1/cmp_luasnip"
             },
             -- lsp
             {
