@@ -38,7 +38,7 @@ function M.config()
             open_folds = { "zR", "zr" },                                                      -- open all folds
             toggle_fold = { "zA", "za" },                                                     -- toggle fold of current file
             previous = "k",                                                                   -- previous item
-            next = "j"                                                                        -- next item
+            next = "j",                                                                       -- next item
             help = "?"                                                                        -- help menu
         },
         multiline = true,                                                                     -- render multi-line messages

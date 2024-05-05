@@ -68,3 +68,10 @@ autocmd({ "InsertLeave", "BufLeave" }, {
         vim.api.nvim_command("silent !fcitx5-remote -c")
     end,
 })
+
+autocmd({ "InsertLeave", "BufWritePost" }, {
+    group = lspFormatGrop,
+    callback = function()
+        require("lint").try_lint()
+    end,
+})
