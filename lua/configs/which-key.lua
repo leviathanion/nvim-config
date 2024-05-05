@@ -34,7 +34,11 @@ function M.config()
             r = "rename",
             h = "signature_help",
             a = "code_action",
-            f = "format"
+            f = {
+                name = "format",
+                l = "lsp format",
+                f = "conform format"
+            },
         },
         ["<leader>s"] = {
             name = "split",

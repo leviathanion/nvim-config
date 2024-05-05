@@ -287,8 +287,20 @@ local pluginlist = {
     --linter
     {
         "mfussenegger/nvim-lint",
+        lazy = true,
+        event = "BufReadPost",
         config = function()
             require("configs.nvim-lint").config()
+        end
+    },
+
+    --formater
+    {
+        "stevearc/conform.nvim",
+        event = { "BufWritePre" },
+        cmd = { "ConformInfo" },
+        config = function()
+            require("configs.conform").config()
         end
     },
 

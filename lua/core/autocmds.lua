@@ -25,7 +25,18 @@ autocmd("BufWritePre", {
     group = lspFormatGrop,
     pattern = { "*.lua", "*.py", "*.sh" },
     callback = function()
-        vim.lsp.buf.format()
+        local buf_clients = vim.lsp.buf_get_clients()
+
+        -- Check LSP clients that support formatting
+        for _, client in pairs(buf_clients) do
+            if client.supports_method('textDocument/formatting') then
+                vim.lsp.buf.format { async = true }
+                return
+            end
+        end
+
+        -- Fallback on conform
+        require('conform').format()
     end
 })
 
@@ -69,7 +80,7 @@ autocmd({ "InsertLeave", "BufLeave" }, {
     end,
 })
 
-autocmd({ "InsertLeave", "BufWritePost" }, {
+autocmd({ "BufReadPost" }, {
     group = lspFormatGrop,
     callback = function()
         require("lint").try_lint()
