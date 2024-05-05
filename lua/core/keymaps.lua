@@ -74,3 +74,6 @@ mapkey('t', '<esc>', [[<C-\><C-n>]])
 
 -- g: generate
 maplua('<leader>gd', "require('neogen').generate()")
+
+--x: trouble
+maplua('<leader>xx', 'require("trouble").toggle()')

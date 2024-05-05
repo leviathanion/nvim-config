@@ -63,6 +63,10 @@ function M.config()
             c = "ChatGPT",
             p = "prompt"
         },
+        ["<leader>x"] = {
+            name = "trouble",
+            x = "show trouble",
+        },
 
     })
 end
