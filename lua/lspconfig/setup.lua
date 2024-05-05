@@ -1,18 +1,18 @@
-local status_mason_lspconfig, mason_lspconfig= pcall(require, "mason-lspconfig")
+local status_mason_lspconfig, mason_lspconfig = pcall(require, "mason-lspconfig")
 if not status_mason_lspconfig then
-  vim.notify("没有找到 mason-lspconfig")
-  return
+    vim.notify("没有找到 mason-lspconfig")
+    return
 end
-local status_lspconfig, lspconfig= pcall(require, "lspconfig")
+local status_lspconfig, lspconfig = pcall(require, "lspconfig")
 if not status_lspconfig then
-  vim.notify("没有找到 lspconfig")
-  return
+    vim.notify("没有找到 lspconfig")
+    return
 end
 
 
 mason_lspconfig.setup({
     ensure_installer = {
-        "pyright","lua_ls","html"
+        "pyright", "lua_ls", "html"
     },
 })
 
@@ -21,10 +21,14 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
 mason_lspconfig.setup_handlers {
-    function (server_name) -- default handler (optional)
+    function(server_name) -- default handler (optional)
         require("lspconfig")[server_name].setup {
             capabilities = capabilities,
             on_attach = on_attach,
+            root_dir = function()
+                worksapce = vim.fn.getcwd()
+                return worksapce
+            end,
             flags = {
                 debounce_text_changes = 150
             }
@@ -32,16 +36,16 @@ mason_lspconfig.setup_handlers {
     end,
     -- Next, you can provide targeted overrides for specific servers.
     -- For example, a handler override for the `rust_analyzer`:
-    ["pyright"] = function ()
+    ["pyright"] = function()
         opts = require("lspconfig.pyright")
         lspconfig.pyright.setup(opts)
     end,
 
-    ["lua_ls"] = function ()
+    ["lua_ls"] = function()
         lspconfig.lua_ls.setup {}
     end,
 
-    ["html"] = function ()
+    ["html"] = function()
         lspconfig.html.setup {}
     end,
 }

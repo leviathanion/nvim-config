@@ -54,7 +54,7 @@ local settings = {
         showmode = false,
         -- 出现错误时发出声音和闪烁
         errorbells = true,
-		visualbell = true,
+        visualbell = true,
     },
 
 
@@ -105,7 +105,8 @@ local function load_options()
             for key, value in pairs(options) do
                 vim[prefix][key] = value
             end
-        else if prefix ~= "global_options" then
+        else
+            if prefix ~= "global_options" then
                 for _, plugin in pairs(options) do
                     vim.g["loaded_" .. plugin] = 1
                 end
