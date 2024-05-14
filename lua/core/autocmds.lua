@@ -30,7 +30,7 @@ autocmd("BufWritePre", {
         -- Check LSP clients that support formatting
         for _, client in pairs(buf_clients) do
             if client.supports_method('textDocument/formatting') then
-                vim.lsp.buf.format { async = true }
+                vim.lsp.buf.format()
                 return
             end
         end
