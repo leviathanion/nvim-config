@@ -9,6 +9,10 @@ local pluginlist = {
     },
 
     {
+        "LunarVim/bigfile.nvim"
+    },
+
+    {
         "goolord/alpha-nvim",
         config = function()
             require("configs.alpha").config()
