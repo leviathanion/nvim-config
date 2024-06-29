@@ -314,10 +314,7 @@ local pluginlist = {
         lazy = true,
         cmd = { "MarkdownPreview", "MarkdownPreviewStop", "MarkdownPreviewToggle" },
         ft = { "markdown" },
-        build = "cd app && npm install",
-        init = function()
-            vim.g.mkdp_filetypes = { "markdown" }
-        end
+        build = function() vim.fn["mkdp#util#install"]() end,
     }
 }
 return pluginlist
