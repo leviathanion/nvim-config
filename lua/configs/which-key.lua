@@ -7,71 +7,64 @@ function M.config()
         return
     end
 
-    wk.register({
-        ["<leader>f"] = {
-            name = "telescope",
-            f = "find files",
-            g = "grep",
-            r = "recent file",
-            b = "buffer",
-            n = "notify"
+    wk.add({
+        {
+            { "<leader>f",  group = "telescope" },
+            { "<leader>fb", desc = "buffer" },
+            { "<leader>ff", desc = "find files" },
+            { "<leader>fg", desc = "grep" },
+            { "<leader>fn", desc = "notify" },
+            { "<leader>fr", desc = "recent file" }
         },
-        ["<leader>l"] = {
-            name = "language",
-            g = {
-                name = "goto",
-                D = "declaration",
-                d = "definition",
-                t = "type_definition",
-                i = "implementation",
-                p = "prev",
-                n = "next",
-                r = "references"
-            },
-            o = "open float",
-            q = "setloclist",
-            d = "hover",
-            r = "rename",
-            h = "signature_help",
-            a = "code_action",
-            f = {
-                name = "format",
-                l = "lsp format",
-                f = "conform format"
-            },
+        {
+            { "<leader>g",  group = "generate" },
+            { "<leader>gd", desc = "docstring" }
         },
-        ["<leader>s"] = {
-            name = "split",
-            c = "close this window",
-            o = "close other window",
-            h = "split horizontal",
-            v = "split vertical"
+        {
+            { "<leader>l",   group = "language" },
+            { "<leader>la",  desc = "code_action" },
+            { "<leader>ld",  desc = "hover" },
+            { "<leader>lf",  group = "format" },
+            { "<leader>lff", desc = "conform format" },
+            { "<leader>lfl", desc = "lsp format" },
+            { "<leader>lg",  group = "goto" },
+            { "<leader>lgD", desc = "declaration" },
+            { "<leader>lgd", desc = "definition" },
+            { "<leader>lgi", desc = "implementation" },
+            { "<leader>lgn", desc = "next" },
+            { "<leader>lgp", desc = "prev" },
+            { "<leader>lgr", desc = "references" },
+            { "<leader>lgt", desc = "type_definition" },
+            { "<leader>lh",  desc = "signature_help" },
+            { "<leader>lo",  desc = "open float" },
+            { "<leader>lq",  desc = "setloclist" },
+            { "<leader>lr",  desc = "rename" },
         },
-        ["<leader>w"] = {
-            name = "workspace",
-            a = "add",
-            r = "remove",
-            l = "list"
+        {
+            { "<leader>o",   group = "open" },
+            { "<leader>oC",  group = "ChatGPT" },
+            { "<leader>oCc", desc = "ChatGPT" },
+            { "<leader>oCp", desc = "prompt" },
+            { "<leader>ob",  desc = "sysmbols outline" },
+            { "<leader>oc",  desc = "copilot panel" },
         },
-        ["<leader>o"] = {
-            name = "open",
-            b = "sysmbols outline",
-            c = "copilot panel",
+        {
+            { "<leader>s",  group = "split" },
+            { "<leader>sc", desc = "close this window" },
+            { "<leader>sh", desc = "split horizontal" },
+            { "<leader>so", desc = "close other window" },
+            { "<leader>sv", desc = "split vertical" },
         },
-        ["<leader>g"] = {
-            name = "generate",
-            d = "docstring"
+        {
+            { "<leader>w",  group = "workspace" },
+            { "<leader>wa", desc = "add" },
+            { "<leader>wl", desc = "list" },
+            { "<leader>wr", desc = "remove" }
         },
-        ["<leader>oC"] = {
-            name = "ChatGPT",
-            c = "ChatGPT",
-            p = "prompt"
-        },
-        ["<leader>x"] = {
-            name = "trouble",
-            x = "show trouble",
-        },
-
+        {
+            { "<leader>x",  group = "trouble" },
+            { "<leader>xx", desc = "show trouble" },
+        }
     })
 end
 
