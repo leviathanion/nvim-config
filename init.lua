@@ -12,9 +12,11 @@ local neovide_config = function()
     vim.g.neovide_cursor_vfx_particle_density = 5.0
 end
 
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
 neovide_config()
-require("core.pack")
-require("core.theme")
 require("core.options")
 require("core.keymaps")
+require("core.pack")
+require("core.theme")
 require("core.autocmds")
