@@ -20,7 +20,7 @@ function M.config()
             "eslint_d"
         },
         python = {
-            "pylint"
+            "ruff"
         }
     }
 end
