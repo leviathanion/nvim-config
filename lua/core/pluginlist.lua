@@ -257,7 +257,7 @@ local pluginlist = {
         lazy = false,
         event = "InsertEnter",
         config = function()
-            require("configs.Comment").config()
+            require("configs.comment").config()
         end
     },
 
