@@ -17,25 +17,25 @@ function M.config()
             ---LHS of toggle mappings in NORMAL mode
             toggler = {
                 ---Line-comment toggle keymap
-                line = 'gcc',
+                line = '<leader>lcc',
                 ---Block-comment toggle keymap
-                block = 'gbc',
+                block = '<leader>lcb',
             },
             ---LHS of operator-pending mappings in NORMAL and VISUAL mode
             opleader = {
                 ---Line-comment keymap
-                line = 'gc',
+                line = '<leader>lcc',
                 ---Block-comment keymap
-                block = 'gb',
+                block = '<leader>lcb',
             },
             ---LHS of extra mappings
             extra = {
                 ---Add comment on the line above
-                above = 'gcO',
+                above = '<leader>lccO',
                 ---Add comment on the line below
-                below = 'gco',
+                below = '<leader>lcco',
                 ---Add comment at the end of line
-                eol = 'gcA',
+                eol = '<leader>lccA',
             },
             ---Enable keybindings
             ---NOTE: If given `false` then the plugin won't create any mappings
