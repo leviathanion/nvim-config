@@ -39,6 +39,9 @@ function M.config()
             { "<leader>lo",  desc = "open float" },
             { "<leader>lq",  desc = "setloclist" },
             { "<leader>lr",  desc = "rename" },
+            { "<leader>lc",  group = "comment" },
+            { "<leader>lcc", group = "comment line" },
+            { "<leader>lcb", group = "comment block" },
         },
         {
             { "<leader>o",   group = "open" },
