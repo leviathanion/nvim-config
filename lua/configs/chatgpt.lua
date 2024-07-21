@@ -6,15 +6,17 @@ function M.config()
         return
     end
     chatgpt.setup {
-        api_key_cmd = nil,
+        api_host_cmd = '',
+        api_key_cmd = '',
         yank_register = "+",
         edit_with_instructions = {
             diff = false,
             keymaps = {
-                close = "<C-c>",
+                close = "q",
                 accept = "<C-y>",
                 toggle_diff = "<C-d>",
                 toggle_settings = "<C-o>",
+                toggle_help = "?",
                 cycle_windows = "<Tab>",
                 use_output_as_input = "<C-i>",
             },
@@ -37,7 +39,7 @@ function M.config()
                 },
             },
             keymaps = {
-                close = { "<C-c>" },
+                close = "q",
                 yank_last = "<C-y>",
                 yank_last_code = "<C-k>",
                 scroll_up = "<C-u>",
@@ -54,6 +56,8 @@ function M.config()
                 edit_message = "e",
                 delete_message = "d",
                 toggle_settings = "<C-o>",
+                toggle_sessions = "<C-p>",
+                toggle_help = "?",
                 toggle_message_role = "<C-r>",
                 toggle_system_role_open = "<C-s>",
                 stop_generating = "<C-x>",
