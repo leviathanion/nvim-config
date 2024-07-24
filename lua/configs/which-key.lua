@@ -7,7 +7,7 @@ function M.config()
         return
     end
 
-    wk.add({
+    wk.add {
         {
             { "<leader>f",  group = "telescope" },
             { "<leader>fb", desc = "buffer" },
@@ -40,8 +40,8 @@ function M.config()
             { "<leader>lq",  desc = "setloclist" },
             { "<leader>lr",  desc = "rename" },
             { "<leader>lc",  group = "comment" },
-            { "<leader>lcc", group = "comment line" },
-            { "<leader>lcb", group = "comment block" },
+            { "<leader>lcl", desc = "comment line" },
+            { "<leader>lcb", desc = "comment block" },
         },
         {
             { "<leader>o",   group = "open" },
@@ -68,7 +68,7 @@ function M.config()
             { "<leader>x",  group = "trouble" },
             { "<leader>xx", desc = "show trouble" },
         }
-    })
+    }
 end
 
 return M
