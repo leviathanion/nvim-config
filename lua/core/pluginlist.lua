@@ -34,6 +34,11 @@ local pluginlist = {
             vim.o.timeout = true
             vim.o.timeoutlen = 300
         end,
+        dependencies = {
+            --nvim icon
+            { "echasnovski/mini.icons" },
+            { "kyazdani42/nvim-web-devicons" }
+        },
         opts = {
             -- your configuration comes here
             -- or leave it empty to use the default settings
