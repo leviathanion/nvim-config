@@ -5,7 +5,7 @@ function M.config()
         vim.notify("没有找到 cmp")
         return
     end
-    cmp.setup({
+    cmp.setup {
         snippet = {
             -- REQUIRED - you must specify a snippet engine
             expand = function(args)
@@ -45,7 +45,7 @@ function M.config()
             { name = 'copilot' }
         }, { { name = 'buffer' },
             { name = 'path' } })
-    })
+    }
 
     -- You can also set special config for specific filetypes:
     cmp.setup.filetype('gitcommit', {

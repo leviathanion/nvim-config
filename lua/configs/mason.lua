@@ -6,7 +6,7 @@ function M.config()
         vim.notify("没有找到 mason")
         return
     end
-    mason.setup({
+    mason.setup {
         ui = {
             icons = {
                 server_installed = "✓",
@@ -24,7 +24,7 @@ function M.config()
                 user_settings.global_options.useMirror .. "%s/release/download/%s/%s"
                 or "https://github.com/%s/releases/download/%s/%s"
         },
-    })
+    }
 end
 
 return M
