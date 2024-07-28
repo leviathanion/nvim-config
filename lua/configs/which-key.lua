@@ -22,7 +22,9 @@ function M.config()
         },
         {
             { "<leader>l",   group = "language" },
-            { "<leader>la",  desc = "code_action" },
+            { "<leader>la",  group = "action and generate" },
+            { "<leader>laa", desc = "code action" },
+            { "<leader>lag", desc = "code generate" },
             { "<leader>ld",  desc = "hover" },
             { "<leader>lf",  group = "format" },
             { "<leader>lff", desc = "conform format" },
