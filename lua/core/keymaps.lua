@@ -59,7 +59,7 @@ maplua('<leader>lgdt', 'vim.lsp.buf.type_definition()')
 maplua('<leader>lgi', 'vim.lsp.buf.implementation()')
 maplua('<leader>lgp', 'vim.diagnostic.goto_prev()')
 maplua('<leader>lgn', 'vim.diagnostic.goto_next()')
-maplua('<leader>lgr', 'vim.lsp.buf.references()')
+maplua('<leader>lgr', 'require("telescope.builtin").lsp_references{}')
 
 maplua('<leader>wa', 'vim.lsp.buf.add_workspace_folder()')
 maplua('<leader>wr', 'vim.lsp.buf.remove_workspace_folder()')
