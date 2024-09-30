@@ -65,7 +65,7 @@ maplua('<leader>wa', 'vim.lsp.buf.add_workspace_folder()')
 maplua('<leader>wr', 'vim.lsp.buf.remove_workspace_folder()')
 maplua('<leader>wl', 'print(vim.inspect(vim.lsp.buf.list_workspace_folders()))')
 
-mapcmd('<leader>ob', 'SymbolsOutline')
+mapcmd('<leader>ob', 'AerialToggle')
 mapcmd('<leader>oc', 'Copilot panel')
 mapcmd('<leader>oCc', 'ChatGPT')
 mapcmd('<leader>oCp', 'ChatGPTActAs')

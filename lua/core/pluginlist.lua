@@ -101,12 +101,17 @@ local pluginlist = {
 
     -- tagbar
     {
-        "simrat39/symbols-outline.nvim",
-        lazy   = true,
-        cmd    = { "SymbolsOutline" },
-        config = function()
-            require("configs.symbols-outline").config()
+        'stevearc/aerial.nvim',
+        -- Optional dependencies
+        lazy         = true,
+        cmd          = { "AerialToggle" },
+        config       = function()
+            require("configs.aerial").config()
         end,
+        dependencies = {
+            "nvim-treesitter/nvim-treesitter",
+            "nvim-tree/nvim-web-devicons"
+        },
     },
 
     -- toggleterm
