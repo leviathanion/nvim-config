@@ -70,12 +70,17 @@ mapcmd('<leader>oc', 'Copilot panel')
 mapcmd('<leader>oCc', 'ChatGPT')
 mapcmd('<leader>oCp', 'ChatGPTActAs')
 
+mapcmd('[g', 'Gitsigns prev_hunk')
+mapcmd(']g', 'Gitsigns next_hunk')
+mapcmd('<leader>hp', 'Gitsigns preview_hunk')
+mapcmd('<leader>hs', 'Gitsigns stage_hunk')
+mapcmd('<leader>hu', 'Gitsigns undo_stage_hunk')
+mapcmd('<leader>hd', 'Gitsigns diffthis')
+mapcmd('<leader>hr', 'Gitsigns reset_hunk')
+
 
 -- toggleterm
 mapkey('t', '<esc>', [[<C-\><C-n>]])
 
 -- g: generate
 maplua('<leader>gd', "require('neogen').generate()")
-
---x: trouble
-maplua('<leader>xx', 'require("trouble").toggle()')

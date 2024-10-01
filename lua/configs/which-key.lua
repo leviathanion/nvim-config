@@ -72,8 +72,12 @@ function M.config()
             { "<leader>wr", desc = "remove" }
         },
         {
-            { "<leader>x",  group = "trouble" },
-            { "<leader>xx", desc = "show trouble" },
+            { "<leader>h",  group = "git" },
+            { "<leader>hd", desc = "git diff" },
+            { "<leader>hs", desc = "stage" },
+            { "<leader>hu", desc = "undo stage" },
+            { "<leader>hr", desc = "reset hunk" },
+            { "<leader>hp", desc = "preview" }
         }
     }
 end

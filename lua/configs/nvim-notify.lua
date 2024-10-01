@@ -7,9 +7,9 @@ function M.config()
         -- fade
         -- slide
         -- static
-        stages = "fade",
+        stages = "fade_in_slide_out",
         -- 超时时间，默认 5s
-        timeout = 2000
+        timeout = 2
     }
 
     -- 如果是透明背景，则需要设置背景色

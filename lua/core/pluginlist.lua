@@ -12,6 +12,14 @@ local pluginlist = {
         "LunarVim/bigfile.nvim"
     },
 
+    -- git
+    {
+        "lewis6991/gitsigns.nvim",
+        config = function()
+            require("configs.gitsigns").config()
+        end
+    },
+
     {
         "goolord/alpha-nvim",
         config = function()
@@ -100,7 +108,7 @@ local pluginlist = {
         dependencies = {
             { "kyazdani42/nvim-web-devicons" },
             -- git
-            { "airblade/vim-gitgutter" },
+            { "lewis6991/gitsigns.nvim" },
         },
         config = function()
             require("configs.lualine").config()
@@ -135,6 +143,8 @@ local pluginlist = {
     -- toggleterm
     {
         "akinsho/toggleterm.nvim",
+        lazy   = true,
+        event  = "VeryLazy",
         config = function()
             require("configs.toggleterm").config()
         end,
@@ -227,34 +237,35 @@ local pluginlist = {
         end
     },
 
-    -- copilot
-    -- use "github/copilot.vim"
-    {
-        "zbirenbaum/copilot.lua",
-        lazy = true,
-        event = { "InsertEnter" },
-        config = function()
-            vim.defer_fn(function()
-                require("configs.copilot").config()
-            end, 100)
-        end,
-        dependencies = {
-            {
-                "zbirenbaum/copilot-cmp",
-                module = "copilot_cmp",
-                dependencies = { "nvim-cmp" },
-                config = function()
-                    require("copilot_cmp").setup()
-                end
-            },
-        }
-    },
+    -- -- copilot
+    -- -- use "github/copilot.vim"
+    -- {
+    --     "zbirenbaum/copilot.lua",
+    --     lazy = true,
+    --     event = { "InsertEnter" },
+    --     config = function()
+    --         vim.defer_fn(function()
+    --             require("configs.copilot").config()
+    --         end, 100)
+    --     end,
+    --     dependencies = {
+    --         {
+    --             "zbirenbaum/copilot-cmp",
+    --             module = "copilot_cmp",
+    --             dependencies = { "nvim-cmp" },
+    --             config = function()
+    --                 require("copilot_cmp").setup()
+    --             end
+    --         },
+    --     }
+    -- },
 
 
     -- Lazy
     {
         "jackMort/ChatGPT.nvim",
         event = "VeryLazy",
+        lazy = true,
         config = function()
             require("configs.chatgpt").config()
         end,
@@ -277,7 +288,7 @@ local pluginlist = {
 
     {
         'numToStr/Comment.nvim',
-        lazy = false,
+        lazy = true,
         event = "InsertEnter",
         config = function()
             require("configs.comment").config()
@@ -297,25 +308,11 @@ local pluginlist = {
         }
     },
 
-    -- trouble
-    {
-        "folke/trouble.nvim",
-        dependencies = { "nvim-tree/nvim-web-devicons" },
-        config = function()
-            require("configs.trouble").config()
-        end,
-        opts = {
-            -- your configuration comes here
-            -- or leave it empty to use the default settings
-            -- refer to the configuration section below
-        },
-    },
-
     --linter
     {
         "mfussenegger/nvim-lint",
         lazy = true,
-        event = "BufReadPost",
+        event = { "BufReadPost" },
         config = function()
             require("configs.nvim-lint").config()
         end
@@ -324,6 +321,7 @@ local pluginlist = {
     --formater
     {
         "stevearc/conform.nvim",
+        lazy = true,
         event = { "BufWritePre" },
         cmd = { "ConformInfo" },
         config = function()
