@@ -17,10 +17,10 @@ end
 mapcmd('<A-m>', 'NvimTreeToggle')
 
 -- f: telescope
-mapcmd('<leader>ff', "Telescope find_files")
-mapcmd('<leader>fg', "Telescope live_grep")
-mapcmd('<leader>fr', "Telescope oldfiles")
-mapcmd('<leader>fb', "Telescope buffers")
+maplua('<leader>ff', "require('telescope.builtin').find_files()")
+maplua('<leader>fg', "require('telescope.builtin').live_grep()")
+maplua('<leader>fr', "require('telescope.builtin').oldfiles()")
+maplua('<leader>fb', "require('telescope.builtin').buffers()")
 maplua('<leader>fn', "require('telescope').extensions.notify.notify()")
 
 
@@ -77,6 +77,7 @@ mapcmd('<leader>hs', 'Gitsigns stage_hunk')
 mapcmd('<leader>hu', 'Gitsigns undo_stage_hunk')
 mapcmd('<leader>hd', 'Gitsigns diffthis')
 mapcmd('<leader>hr', 'Gitsigns reset_hunk')
+mapcmd('<leader>hb', 'Gitsigns blame_line')
 
 
 -- toggleterm
