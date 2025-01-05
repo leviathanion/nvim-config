@@ -1,7 +1,7 @@
 local user_settings = require("core.options")
 local M = {}
 function M.config()
-    local status, treesitter = pcall(require, "nvim-treesitter")
+    local status, treesitter = pcall(require, "nvim-treesitter.configs")
     if not status then
         vim.notify("没有找到 nvim-treesitter")
         return
@@ -34,6 +34,48 @@ function M.config()
                 node_incremental = '<CR>',
                 node_decremental = '<BS>',
                 scope_incremental = '<TAB>',
+            }
+        },
+        textobjects = {
+            select = {
+                enable = true,
+                lookahead = true,
+                keymaps = {
+                    ['au'] = '@comment.outer',
+                    ['iu'] = '@comment.inner',
+                    ['af'] = '@function.outer',
+                    ['if'] = '@function.inner',
+                    ['ac'] = '@class.outer',
+                    ['ic'] = '@class.inner',
+                    ['ab'] = '@block.outer',
+                    ['ib'] = '@block.inner',
+                },
+                selection_modes = {
+                    ['@parameter.outer'] = 'v', -- charwise
+                    ['@function.outer'] = 'V',  -- linewise
+                    ['@class.outer'] = '<c-v>', -- blockwise
+                },
+            },
+            move = {
+                enable = true,
+                set_jumps = true, -- whether to set jumps in the jumplist
+                goto_next_start = {
+                    [']f'] = '@function.outer',
+                    [']]'] = { query = '@class.outer', desc = 'Next class start' },
+                },
+                goto_next_end = {
+                    [']F'] = '@function.outer',
+                    [']['] = '@class.outer',
+                },
+                goto_previous_start = {
+                    ['[f'] = '@function.outer',
+                    ['[['] = '@class.outer',
+                },
+                goto_previous_end = {
+                    ['[F'] = '@function.outer',
+                    ['[]'] = '@class.outer',
+                },
+
             }
         }
     }

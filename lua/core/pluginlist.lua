@@ -158,6 +158,10 @@ local pluginlist = {
         config = function()
             require("configs.treesitter").config()
         end,
+        dependencies = {
+            { "nvim-treesitter/nvim-treesitter-textobjects" },
+            { "nvim-treesitter/nvim-treesitter-context" },
+        },
     },
 
     -- file telescope
