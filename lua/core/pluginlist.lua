@@ -220,12 +220,10 @@ local pluginlist = {
                     { "hrsh7th/cmp-nvim-lsp" },
                     { "neovim/nvim-lspconfig" },
                     { "williamboman/mason.nvim" },
-                    { "nvimdev/lspsaga.nvim" },
                 },
                 config = function()
                     require("lsp.setup")
                     require("lspconfig.setup")
-                    require('lspsaga').setup({})
                 end,
             },
             { "onsails/lspkind-nvim" },
