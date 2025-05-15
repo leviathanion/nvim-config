@@ -25,7 +25,7 @@ autocmd("BufWritePre", {
     group = lspFormatGrop,
     pattern = { "*.lua", "*.py", "*.sh" },
     callback = function()
-        local buf_clients = vim.lsp.buf_get_clients()
+        local buf_clients = vim.lsp.get_clients()
 
         -- Check LSP clients that support formatting
         for _, client in pairs(buf_clients) do

@@ -2,6 +2,12 @@ local pluginlist = {
     {
         "navarasu/onedark.nvim"
     },
+    {
+        "neovim/nvim-lspconfig",
+        config = function()
+            require("configs.nvim-lspconfig").config()
+        end
+    },
 
     {
         "dstein64/vim-startuptime",
@@ -214,18 +220,8 @@ local pluginlist = {
                 "saadparwaiz1/cmp_luasnip"
             },
             -- lsp
-            {
-                "williamboman/mason-lspconfig.nvim",
-                dependencies = {
-                    { "hrsh7th/cmp-nvim-lsp" },
-                    { "neovim/nvim-lspconfig" },
-                    { "williamboman/mason.nvim" },
-                },
-                config = function()
-                    require("lsp.setup")
-                    require("lspconfig.setup")
-                end,
-            },
+            { "hrsh7th/cmp-nvim-lsp" },
+            { "williamboman/mason.nvim" },
             { "onsails/lspkind-nvim" },
             { "hrsh7th/cmp-buffer" },
             { "hrsh7th/cmp-path" },
