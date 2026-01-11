@@ -161,15 +161,11 @@ local pluginlist = {
         "nvim-treesitter/nvim-treesitter",
         lazy = false,
         build = ':TSUpdate',
-        branch = 'master',
+        branch = 'main',
         config = function()
-            require("configs.treesitter").config()
+            require("configs.nvim-treesitter").config()
         end,
         dependencies = {
-            {
-                "nvim-treesitter/nvim-treesitter-textobjects",
-                banch = 'master'
-            },
             { "nvim-treesitter/nvim-treesitter-context" },
         },
     },
