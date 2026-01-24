@@ -34,10 +34,20 @@ local pluginlist = {
     },
 
     {
-        "williamboman/mason.nvim",
+        "mason-org/mason.nvim",
         config = function()
             require("configs.mason").config()
         end,
+    },
+
+    {
+        "mason-org/mason-lspconfig.nvim",
+        lazy = false,
+        opts = {},
+        dependencies = {
+            { "mason-org/mason.nvim" },
+            { "neovim/nvim-lspconfig" }
+        }
     },
 
     -- 快捷键展示
