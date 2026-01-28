@@ -106,11 +106,5 @@ autocmd("FileType", {
                 require("nvim-treesitter").install(lang)
             end
         end
-
-        if vim.treesitter.language.add(lang) then
-            vim.treesitter.start(args.buf, lang)
-            vim.wo[0][0].foldexpr = "v:lua.vim.treesitter.foldexpr()"
-            vim.wo[0][0].foldmethod = "expr"
-        end
     end,
 })
