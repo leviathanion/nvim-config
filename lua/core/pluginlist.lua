@@ -214,35 +214,17 @@ local pluginlist = {
 
     --completion
     {
-        "hrsh7th/nvim-cmp",
+        'saghen/blink.cmp',
         lazy = true,
         event = { "InsertEnter", "CmdlineEnter" },
+        version = '1.*',
         dependencies = {
-            {
-                "L3MON4D3/LuaSnip",
-                dependencies = { "rafamadriz/friendly-snippets" },
-                config = function()
-                    require("configs.luasnip").config()
-                end
-            },
-
-            {
-                "saadparwaiz1/cmp_luasnip"
-            },
-            -- lsp
-            { "hrsh7th/cmp-nvim-lsp" },
-            { "williamboman/mason.nvim" },
-            { "onsails/lspkind-nvim" },
-            { "hrsh7th/cmp-buffer" },
-            { "hrsh7th/cmp-path" },
-            { "hrsh7th/cmp-cmdline" },
-            { "hrsh7th/cmp-nvim-lua" },
-            { "hrsh7th/cmp-nvim-lsp-signature-help" },
-            { "kdheepak/cmp-latex-symbols" },
+            { 'rafamadriz/friendly-snippets' },
+            { "L3MON4D3/LuaSnip" }
         },
         config = function()
-            require("configs.cmp").config()
-        end
+            require("configs.blink-cmp").config()
+        end,
     },
 
     -- -- copilot
