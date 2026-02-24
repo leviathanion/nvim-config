@@ -64,6 +64,8 @@ local settings = {
         relativenumber = true,
         -- 高亮所在行
         cursorline = true,
+        -- 高亮所在列
+        cursorcolumn = true,
         -- 显示左侧图标指示列
         signcolumn = "yes",
         -- 右侧参考线，超过表示代码太长了，考虑换行
