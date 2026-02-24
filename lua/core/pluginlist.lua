@@ -311,6 +311,16 @@ local pluginlist = {
         cmd = { "MarkdownPreview", "MarkdownPreviewStop", "MarkdownPreviewToggle" },
         ft = { "markdown" },
         build = function() vim.fn["mkdp#util#install"]() end,
-    }
+    },
+
+    {
+        "sphamba/smear-cursor.nvim",
+        opts = {}
+    },
+
+    {
+        "karb94/neoscroll.nvim",
+        opts = {}
+    },
 }
 return pluginlist
