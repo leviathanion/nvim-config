@@ -188,7 +188,8 @@ local pluginlist = {
         dependencies = {
             { "nvim-lua/plenary.nvim" },
             { "BurntSushi/ripgrep" },
-            { "nvim-lua/popup.nvim" }
+            { "nvim-lua/popup.nvim" },
+            { "nvim-telescope/telescope-live-grep-args.nvim" },
         },
         config = function()
             require("configs.telescope").config()
@@ -311,16 +312,6 @@ local pluginlist = {
         cmd = { "MarkdownPreview", "MarkdownPreviewStop", "MarkdownPreviewToggle" },
         ft = { "markdown" },
         build = function() vim.fn["mkdp#util#install"]() end,
-    },
-
-    {
-        "sphamba/smear-cursor.nvim",
-        opts = {}
-    },
-
-    {
-        "karb94/neoscroll.nvim",
-        opts = {}
-    },
+    }
 }
 return pluginlist

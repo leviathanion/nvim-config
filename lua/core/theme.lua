@@ -21,6 +21,6 @@ if not status then
     return
 end
 onedark.setup {
-    style = 'cool'
+    style = 'deep'
 }
 onedark.load()

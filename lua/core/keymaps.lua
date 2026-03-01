@@ -2,15 +2,15 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 local function mapkey(mode, lhs, rhs)
-    vim.api.nvim_set_keymap(mode, lhs, rhs, { noremap = true })
+  vim.api.nvim_set_keymap(mode, lhs, rhs, { noremap = true })
 end
 
 local function mapcmd(key, cmd)
-    vim.api.nvim_set_keymap('n', key, ':' .. cmd .. '<cr>', { noremap = true })
+  vim.api.nvim_set_keymap('n', key, ':' .. cmd .. '<cr>', { noremap = true })
 end
 
 local function maplua(key, txt)
-    vim.api.nvim_set_keymap('n', key, ':lua ' .. txt .. '<cr>', { noremap = true })
+  vim.api.nvim_set_keymap('n', key, ':lua ' .. txt .. '<cr>', { noremap = true })
 end
 
 --  filetree
@@ -18,10 +18,11 @@ mapcmd('<A-m>', 'NvimTreeToggle')
 
 -- f: telescope
 maplua('<leader>ff', "require('telescope.builtin').find_files()")
-maplua('<leader>fg', "require('telescope.builtin').live_grep()")
+maplua('<leader>fg', "require('telescope').extensions.live_grep_args.live_grep_args()<CR>")
 maplua('<leader>fr', "require('telescope.builtin').oldfiles()")
 maplua('<leader>fb', "require('telescope.builtin').buffers()")
 maplua('<leader>fn', "require('telescope').extensions.notify.notify()")
+mapcmd('<leader>ft', "TermSelect")
 
 
 -- s: split
@@ -65,9 +66,7 @@ maplua('<leader>wr', 'vim.lsp.buf.remove_workspace_folder()')
 maplua('<leader>wl', 'print(vim.inspect(vim.lsp.buf.list_workspace_folders()))')
 
 mapcmd('<leader>ob', 'AerialToggle')
-mapcmd('<leader>oc', 'Copilot panel')
-mapcmd('<leader>oCc', 'ChatGPT')
-mapcmd('<leader>oCp', 'ChatGPTActAs')
+mapcmd('<leader>otn', 'TermNew')
 
 mapcmd('[g', 'Gitsigns prev_hunk')
 mapcmd(']g', 'Gitsigns next_hunk')
@@ -84,3 +83,4 @@ mapkey('t', '<esc>', [[<C-\><C-n>]])
 
 -- g: generate
 maplua('<leader>gd', "require('neogen').generate()")
+mapcmd('<leader>gtn', "ToggleTermSetName")
