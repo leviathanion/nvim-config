@@ -79,7 +79,7 @@ mapcmd('<leader>hb', 'Gitsigns blame_line')
 
 
 -- toggleterm
-mapkey('t', '<esc>', [[<C-\><C-n>]])
+mapkey('t', '<esc><esc>', [[<C-\><C-n>]])
 
 -- g: generate
 maplua('<leader>gd', "require('neogen').generate()")
