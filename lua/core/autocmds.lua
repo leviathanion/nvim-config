@@ -1,9 +1,9 @@
 local myAutoGroup = vim.api.nvim_create_augroup("myAutoGroup", {
-    clear = true,
+  clear = true,
 })
 
 local lspFormatGrop = vim.api.nvim_create_augroup("lspFormatGrop", {
-    clear = false,
+  clear = false,
 })
 
 local autocmd = vim.api.nvim_create_autocmd
@@ -22,89 +22,99 @@ local autocmd = vim.api.nvim_create_autocmd
 
 -- 保存时自动格式化
 autocmd("BufWritePre", {
-    group = lspFormatGrop,
-    pattern = { "*.lua", "*.py", "*.sh" },
-    callback = function()
-        local buf_clients = vim.lsp.get_clients({ bufnr = 0 })
+  group = lspFormatGrop,
+  pattern = { "*.lua", "*.py", "*.sh", "*.json" },
+  callback = function()
+    local buf_clients = vim.lsp.get_clients({ bufnr = 0 })
 
-        -- Check LSP clients that support formatting
-        for _, client in pairs(buf_clients) do
-            if client.supports_method('textDocument/formatting') then
-                vim.lsp.buf.format()
-                return
-            end
-        end
-
-        -- Fallback on conform
-        require('conform').format()
+    -- Check LSP clients that support formatting
+    for _, client in pairs(buf_clients) do
+      if client.supports_method('textDocument/formatting') then
+        vim.lsp.buf.format()
+        return
+      end
     end
+
+    -- Fallback on conform
+    require('conform').format()
+  end
+})
+
+autocmd("BufReadPost", {
+  group = myAutoGroup,
+  pattern = "*.json",
+  callback = function()
+    require('conform').format()
+    -- 格式化后将光标移回顶部
+    vim.api.nvim_win_set_cursor(0, { 1, 0 })
+  end,
 })
 
 -- 修改lua/plugins.lua 自动更新插件
 autocmd("BufWritePost", {
-    group = myAutoGroup,
-    -- autocmd BufWritePost plugins.lua source <afile> | PackerSync
-    callback = function()
-        if vim.fn.expand("<afile>") == "lua/core/pluginlist.lua" then
-            vim.api.nvim_command("source lua/core/pluginlist.lua")
-            vim.api.nvim_command("Lazy sync")
-        end
-    end,
+  group = myAutoGroup,
+  -- autocmd BufWritePost plugins.lua source <afile> | PackerSync
+  callback = function()
+    if vim.fn.expand("<afile>") == "lua/core/pluginlist.lua" then
+      vim.api.nvim_command("source lua/core/pluginlist.lua")
+      vim.api.nvim_command("Lazy sync")
+    end
+  end,
 })
 
 
 -- 用o换行不要延续注释
 autocmd("BufEnter", {
-    group = myAutoGroup,
-    pattern = "*",
-    callback = function()
-        vim.opt.formatoptions = vim.opt.formatoptions
-            - "o" -- O and o, don't continue comments
-            + "r" -- But do continue when pressing enter.
-    end,
+  group = myAutoGroup,
+  pattern = "*",
+  callback = function()
+    vim.opt.formatoptions = vim.opt.formatoptions
+        - "o" -- O and o, don't continue comments
+        + "r" -- But do continue when pressing enter.
+  end,
 })
 
 autocmd({ "InsertEnter" }, {
-    group = myAutoGroup,
-    pattern = { "*.md" },
-    callback = function()
-        vim.api.nvim_command("silent !fcitx5-remote -o")
-    end,
+  group = myAutoGroup,
+  pattern = { "*.md" },
+  callback = function()
+    vim.api.nvim_command("silent !fcitx5-remote -o")
+  end,
 })
 
 autocmd({ "InsertLeave", "BufLeave" }, {
-    group    = myAutoGroup,
-    pattern  = "*",
-    callback = function()
-        vim.api.nvim_command("silent !fcitx5-remote -c")
-    end,
+  group    = myAutoGroup,
+  pattern  = "*",
+  callback = function()
+    vim.api.nvim_command("silent !fcitx5-remote -c")
+  end,
 })
 
 autocmd({ "BufReadPost" }, {
-    group = lspFormatGrop,
-    callback = function()
-        require("lint").try_lint()
-    end,
+  group = lspFormatGrop,
+  callback = function()
+    require("lint").try_lint()
+  end,
 })
 
 autocmd("FileType", {
-    -- This will make TS install parser for each new filetype you open.
-    -- If you want only specific filetypes, change `{ "*" }` to a list
-    -- of preferred filetypes (not languages, unlike `ensure_installed`).
-    pattern = { "*" },
-    callback = function(args)
-        local ft = vim.bo[args.buf].filetype
-        local lang = vim.treesitter.language.get_lang(ft)
+  -- This will make TS install parser for each new filetype you open.
+  -- If you want only specific filetypes, change `{ "*" }` to a list
+  -- of preferred filetypes (not languages, unlike `ensure_installed`).
+  pattern = { "*" },
+  callback = function(args)
+    local ft = vim.bo[args.buf].filetype
+    local lang = vim.treesitter.language.get_lang(ft)
 
-        if not vim.treesitter.language.add(lang) then
-            local available = vim.g.ts_available
-                or require("nvim-treesitter").get_available()
-            if not vim.g.ts_available then
-                vim.g.ts_available = available
-            end
-            if vim.tbl_contains(available, lang) then
-                require("nvim-treesitter").install(lang)
-            end
-        end
-    end,
+    if not vim.treesitter.language.add(lang) then
+      local available = vim.g.ts_available
+          or require("nvim-treesitter").get_available()
+      if not vim.g.ts_available then
+        vim.g.ts_available = available
+      end
+      if vim.tbl_contains(available, lang) then
+        require("nvim-treesitter").install(lang)
+      end
+    end
+  end,
 })

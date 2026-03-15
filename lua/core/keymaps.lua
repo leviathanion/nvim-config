@@ -23,6 +23,7 @@ maplua('<leader>fr', "require('telescope.builtin').oldfiles()")
 maplua('<leader>fb', "require('telescope.builtin').buffers()")
 maplua('<leader>fn', "require('telescope').extensions.notify.notify()")
 mapcmd('<leader>ft', "TermSelect")
+mapcmd('<leader>fc', "NvimTreeFindFile")
 
 
 -- s: split

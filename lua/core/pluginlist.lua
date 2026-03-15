@@ -134,8 +134,7 @@ local pluginlist = {
     -- file tree
     {
         "kyazdani42/nvim-tree.lua",
-        lazy = true,
-        cmd = { "NvimTreeToggle" },
+        lazy = false,
         config = function()
             require("configs.nvim-tree").config()
         end,
