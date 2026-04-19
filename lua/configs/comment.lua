@@ -27,15 +27,6 @@ function M.config()
             ---Block-comment keymap
             block = '<leader>lcb',
         },
-        ---LHS of extra mappings
-        extra = {
-            ---Add comment on the line above
-            above = '<leader>lclO',
-            ---Add comment on the line below
-            below = '<leader>lclo',
-            ---Add comment at the end of line
-            eol = '<leader>lclA',
-        },
         ---Enable keybindings
         ---NOTE: If given `false` then the plugin won't create any mappings
         mappings = {

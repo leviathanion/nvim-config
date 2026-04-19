@@ -11,7 +11,17 @@ function M.config()
       lua = { "stylua" },
       python = { "isort", "black" },
       javascript = { "prettierd", "prettier" },
-      json = { "jq" }
+      javascriptreact = { "prettierd", "prettier" },
+      json = { "jq" },
+      sh = { "shfmt" },
+      typescript = { "prettierd", "prettier" },
+      typescriptreact = { "prettierd", "prettier" }
+    },
+    notify_on_error = false,
+    formatters = {
+      shfmt = {
+        prepend_args = { "-i", "4" },
+      },
     }
   }
 end

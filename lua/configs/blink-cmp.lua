@@ -28,7 +28,7 @@ function M.config()
         sources = {
             default = { 'lsp', 'buffer', 'snippets', 'path', 'omni' }
         },
-        snippets = { preset = 'luasnip' },
+        snippets = { preset = 'default' },
         signature = { enabled = true },
         completion = {
             list = {

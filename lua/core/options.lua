@@ -76,24 +76,18 @@ local settings = {
 
     },
     disable_builtin_plugins = {
-        "netrw",
-        "netrwPlugin",
-        "netrwSettings",
-        "netrwFileHandlers",
-        "2html_plugin",
-        "getscript",
-        "getscriptPlugin",
-        "gzip",
-        "logipat",
-        "matchit",
-        "tar",
-        "tarPlugin",
-        "rrhelper",
-        "spellfile_plugin",
-        "vimball",
-        "vimballPlugin",
-        "zip",
-        "zipPlugin",
+        netrw = 1,
+        netrwPlugin = 1,
+        netrwSettings = 1,
+        netrwFileHandlers = 1,
+        nvim_net_plugin = 1,
+        zipPlugin = 1,
+        tarPlugin = 1,
+        getscript = 1,
+        getscriptPlugin = 1,
+        vimball = 1,
+        vimballPlugin = 1,
+        ["2html_plugin"] = 1,
     },
     global_options = {
         useMirror = false,
@@ -109,8 +103,8 @@ local function load_options()
             end
         else
             if prefix ~= "global_options" then
-                for _, plugin in pairs(options) do
-                    vim.g["loaded_" .. plugin] = 1
+                for plugin, value in pairs(options) do
+                    vim.g["loaded_" .. plugin] = value
                 end
             end
         end
