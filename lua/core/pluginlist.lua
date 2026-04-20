@@ -43,6 +43,20 @@ local pluginlist = {
     end,
   },
 
+  {
+    "mason-org/mason-lspconfig.nvim",
+    lazy = false,
+    dependencies = {
+      { "mason-org/mason.nvim" },
+      { "neovim/nvim-lspconfig" },
+    },
+    opts = {
+      -- Keep server activation explicit in configs.nvim-lspconfig to avoid
+      -- mason-lspconfig and vim.lsp.enable() both mutating startup behavior.
+      automatic_enable = false,
+    },
+  },
+
   -- 快捷键展示
   {
     "folke/which-key.nvim",
