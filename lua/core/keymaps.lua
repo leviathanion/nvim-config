@@ -30,10 +30,13 @@ end, "buffers")
 nmap("<leader>fn", function()
   require("telescope").extensions.notify.notify()
 end, "notify history")
-nmap("<leader>ft", "<Cmd>TermSelect<CR>", "terminals")
 nmap("<leader>fc", "<Cmd>NvimTreeFindFile<CR>", "reveal current file")
 
--- splits
+-- windows
+nmap("<C-h>", "<C-w>h", "focus left window")
+nmap("<C-j>", "<C-w>j", "focus lower window")
+nmap("<C-k>", "<C-w>k", "focus upper window")
+nmap("<C-l>", "<C-w>l", "focus right window")
 nmap("<A-=>", "<C-w>+", "increase height")
 nmap("<A-->", "<C-w>-", "decrease height")
 nmap("<A-.>", "<C-w>>", "increase width")
@@ -44,8 +47,8 @@ nmap("<leader>sh", "<Cmd>split<CR>", "split horizontal")
 nmap("<leader>sv", "<Cmd>vsplit<CR>", "split vertical")
 
 -- buffers
-nmap("<C-h>", "<Cmd>BufferLineCyclePrev<CR>", "previous buffer")
-nmap("<C-l>", "<Cmd>BufferLineCycleNext<CR>", "next buffer")
+nmap("[b", "<Cmd>BufferLineCyclePrev<CR>", "previous buffer")
+nmap("]b", "<Cmd>BufferLineCycleNext<CR>", "next buffer")
 
 -- diagnostics and lsp
 nmap("<leader>lo", vim.diagnostic.open_float, "open diagnostic")
@@ -66,8 +69,8 @@ nmap("<leader>lff", function()
 end, "conform format")
 
 nmap("<leader>lgD", vim.lsp.buf.declaration, "goto declaration")
-nmap("<leader>lgdd", vim.lsp.buf.definition, "goto definition")
-nmap("<leader>lgdt", vim.lsp.buf.type_definition, "goto type definition")
+nmap("<leader>lgd", vim.lsp.buf.definition, "goto definition")
+nmap("<leader>lgt", vim.lsp.buf.type_definition, "goto type definition")
 nmap("<leader>lgi", vim.lsp.buf.implementation, "goto implementation")
 nmap("<leader>lgr", function()
   require("telescope.builtin").lsp_references()
@@ -81,21 +84,29 @@ end, "list workspace folders")
 
 -- outline and terminal
 nmap("<leader>ob", "<Cmd>AerialToggle<CR>", "toggle outline")
-nmap("<leader>otn", "<Cmd>TermNew<CR>", "new terminal")
-nmap("<leader>gtn", "<Cmd>ToggleTermSetName<CR>", "rename terminal")
+nmap("<leader>tn", "<Cmd>TermNew<CR>", "new terminal")
+nmap("<leader>tr", "<Cmd>ToggleTermSetName<CR>", "rename terminal")
+nmap("<leader>ts", "<Cmd>TermSelect<CR>", "select terminal")
 
--- git
+-- project git
+nmap("<leader>go", "<Cmd>DiffviewOpen<CR>", "open git changes")
+nmap("<leader>gq", "<Cmd>DiffviewClose<CR>", "close git changes")
+nmap("<leader>ge", "<Cmd>DiffviewFocusFiles<CR>", "focus changed files")
+nmap("<leader>gh", "<Cmd>DiffviewFileHistory %<CR>", "current file history")
+nmap("<leader>gH", "<Cmd>DiffviewFileHistory<CR>", "repository history")
+nmap("<leader>gd", "<Cmd>Gitsigns diffthis<CR>", "diff current file")
+nmap("<leader>gb", "<Cmd>Gitsigns blame_line<CR>", "blame line")
+
+-- git hunks
 nmap("[g", "<Cmd>Gitsigns prev_hunk<CR>", "previous hunk")
 nmap("]g", "<Cmd>Gitsigns next_hunk<CR>", "next hunk")
 nmap("<leader>hp", "<Cmd>Gitsigns preview_hunk<CR>", "preview hunk")
 nmap("<leader>hs", "<Cmd>Gitsigns stage_hunk<CR>", "stage hunk")
 nmap("<leader>hu", "<Cmd>Gitsigns undo_stage_hunk<CR>", "undo stage hunk")
-nmap("<leader>hd", "<Cmd>Gitsigns diffthis<CR>", "diff this")
 nmap("<leader>hr", "<Cmd>Gitsigns reset_hunk<CR>", "reset hunk")
-nmap("<leader>hb", "<Cmd>Gitsigns blame_line<CR>", "blame line")
 
 -- docstring
-nmap("<leader>gd", function()
+nmap("<leader>cd", function()
   require("neogen").generate()
 end, "generate docstring")
 

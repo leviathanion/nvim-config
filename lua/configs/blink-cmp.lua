@@ -11,7 +11,7 @@ function M.config()
       preset = 'none',
       ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
       ['<C-e>'] = { 'hide', 'fallback' },
-      ['<Enter>'] = { 'select_and_accept', 'fallback' },
+      ['<CR>'] = { 'select_and_accept', 'fallback' },
 
       ['<Up>'] = { 'select_prev', 'fallback' },
       ['<Down>'] = { 'select_next', 'fallback' },
@@ -81,16 +81,15 @@ function M.config()
       end,
       keymap = {
         preset = 'cmdline',
-        ['<Tab>'] = { 'show', 'accept' },
-        ['<CR>'] = { 'fallback' },
+        ['<CR>'] = { 'select_accept_and_enter', 'fallback' },
       },
       completion = {
         list = {
           selection = {
             -- When `true`, will automatically select the first item in the completion list
-            preselect = false,
+            preselect = true,
             -- When `true`, inserts the completion item automatically when selecting it
-            auto_insert = false,
+            auto_insert = true,
           },
         },
         menu = {

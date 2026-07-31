@@ -29,6 +29,24 @@ local pluginlist = {
   },
 
   {
+    "dlyongemallo/diffview-plus.nvim",
+    version = "*",
+    cmd = {
+      "DiffviewOpen",
+      "DiffviewClose",
+      "DiffviewToggleFiles",
+      "DiffviewFocusFiles",
+      "DiffviewFileHistory",
+    },
+    dependencies = {
+      { "nvim-tree/nvim-web-devicons" },
+    },
+    config = function()
+      require("configs.diffview").config()
+    end,
+  },
+
+  {
     "goolord/alpha-nvim",
     config = function()
       require("configs.alpha").config()
