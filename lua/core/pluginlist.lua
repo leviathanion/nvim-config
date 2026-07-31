@@ -1,22 +1,25 @@
 local pluginlist = {
   {
-    "navarasu/onedark.nvim"
+    "navarasu/onedark.nvim",
   },
   {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
+    dependencies = {
+      { "mason-org/mason.nvim" },
+    },
     config = function()
       require("configs.nvim-lspconfig").config()
-    end
+    end,
   },
 
   {
     "dstein64/vim-startuptime",
-    cmd = "StartupTime"
+    cmd = "StartupTime",
   },
 
   {
-    "LunarVim/bigfile.nvim"
+    "LunarVim/bigfile.nvim",
   },
 
   -- git
@@ -25,7 +28,7 @@ local pluginlist = {
     event = { "BufReadPre", "BufNewFile" },
     config = function()
       require("configs.gitsigns").config()
-    end
+    end,
   },
 
   {
@@ -50,7 +53,7 @@ local pluginlist = {
     "goolord/alpha-nvim",
     config = function()
       require("configs.alpha").config()
-    end
+    end,
   },
 
   {
@@ -61,34 +64,16 @@ local pluginlist = {
     end,
   },
 
-  {
-    "mason-org/mason-lspconfig.nvim",
-    lazy = false,
-    dependencies = {
-      { "mason-org/mason.nvim" },
-      { "neovim/nvim-lspconfig" },
-    },
-    opts = {
-      -- Keep server activation explicit in configs.nvim-lspconfig to avoid
-      -- mason-lspconfig and vim.lsp.enable() both mutating startup behavior.
-      automatic_enable = false,
-    },
-  },
-
   -- 快捷键展示
   {
     "folke/which-key.nvim",
     event = "VeryLazy",
-    init = function()
-      vim.o.timeout = true
-      vim.o.timeoutlen = 300
-    end,
     dependencies = {
-      { "nvim-tree/nvim-web-devicons" }
+      { "nvim-tree/nvim-web-devicons" },
     },
     config = function()
       require("configs.which-key").config()
-    end
+    end,
   },
 
   -- 通知弹窗美化
@@ -108,13 +93,13 @@ local pluginlist = {
       "rcarriga/nvim-notify",
       -- 使用新窗口接管原有的viml.ui选择窗口
       "stevearc/dressing.nvim",
-    }
+    },
   },
   {
     "rcarriga/nvim-notify",
     event = "VeryLazy",
     dependencies = {
-      { "nvim-tree/nvim-web-devicons" }
+      { "nvim-tree/nvim-web-devicons" },
     },
     config = function()
       require("configs.nvim-notify").config()
@@ -157,14 +142,14 @@ local pluginlist = {
 
   -- tagbar
   {
-    'stevearc/aerial.nvim',
+    "stevearc/aerial.nvim",
     cmd = { "AerialToggle" },
     config = function()
       require("configs.aerial").config()
     end,
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
-      "nvim-tree/nvim-web-devicons"
+      "nvim-tree/nvim-web-devicons",
     },
   },
 
@@ -181,8 +166,8 @@ local pluginlist = {
   {
     "nvim-treesitter/nvim-treesitter",
     lazy = false,
-    build = ':TSUpdate',
-    branch = 'main',
+    build = ":TSUpdate",
+    branch = "main",
     config = function()
       require("configs.nvim-treesitter").config()
     end,
@@ -221,9 +206,9 @@ local pluginlist = {
 
   --completion
   {
-    'saghen/blink.cmp',
+    "saghen/blink.cmp",
     event = { "InsertEnter", "CmdlineEnter" },
-    version = '1.*',
+    version = "1.*",
     config = function()
       require("configs.blink-cmp").config()
     end,
@@ -235,15 +220,17 @@ local pluginlist = {
     event = "InsertEnter",
     config = function()
       require("configs.nvim-autopairs").config()
-    end
+    end,
   },
 
   {
-    'numToStr/Comment.nvim',
-    event = "InsertEnter",
+    "numToStr/Comment.nvim",
+    keys = function()
+      return require("configs.comment").keys
+    end,
     config = function()
       require("configs.comment").config()
-    end
+    end,
   },
 
   -- docstring
@@ -251,11 +238,11 @@ local pluginlist = {
     "danymat/neogen",
     event = "BufReadPost",
     config = function()
-      require("neogen").setup {}
+      require("neogen").setup({})
     end,
     dependencies = {
       { "nvim-treesitter/nvim-treesitter" },
-    }
+    },
   },
 
   --linter
@@ -264,7 +251,7 @@ local pluginlist = {
     event = { "BufReadPost", "BufNewFile" },
     config = function()
       require("configs.nvim-lint").config()
-    end
+    end,
   },
 
   --formater
@@ -274,16 +261,17 @@ local pluginlist = {
     cmd = { "ConformInfo" },
     config = function()
       require("configs.conform").config()
-    end
+    end,
   },
-
 
   {
     "iamcco/markdown-preview.nvim",
     lazy = true,
     cmd = { "MarkdownPreview", "MarkdownPreviewStop", "MarkdownPreviewToggle" },
     ft = { "markdown" },
-    build = function() vim.fn["mkdp#util#install"]() end,
-  }
+    build = function()
+      vim.fn["mkdp#util#install"]()
+    end,
+  },
 }
 return pluginlist
