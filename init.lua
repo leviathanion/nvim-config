@@ -1,4 +1,5 @@
 require("core.options")
+require("configs.bigfile").config()
 require("core.keymaps")
 require("core.pack")
 require("core.theme")

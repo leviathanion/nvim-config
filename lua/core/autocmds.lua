@@ -25,7 +25,7 @@ local lint_filetypes = {
 }
 
 local function can_edit_buffer(bufnr)
-  return vim.bo[bufnr].buftype == "" and vim.bo[bufnr].modifiable
+  return vim.bo[bufnr].buftype == "" and vim.bo[bufnr].modifiable and not vim.b[bufnr].bigfile
 end
 
 autocmd("BufWritePre", {

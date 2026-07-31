@@ -57,18 +57,12 @@ function M.config()
     vim.notify(message, vim.log.levels.WARN)
   end
 
-  local function set_feature_options(buf, win)
+  local function set_indent(buf)
     vim.api.nvim_set_option_value(
       "indentexpr",
       "v:lua.require'nvim-treesitter'.indentexpr()",
       { buf = buf }
     )
-
-    if win and vim.api.nvim_win_is_valid(win) then
-      vim.api.nvim_set_option_value("foldmethod", "expr", { win = win })
-      vim.api.nvim_set_option_value("foldexpr", "v:lua.vim.treesitter.foldexpr()", { win = win })
-      vim.api.nvim_set_option_value("foldlevel", 99, { win = win })
-    end
   end
 
   local function start_features(buf, lang)
@@ -127,13 +121,17 @@ function M.config()
   vim.api.nvim_create_autocmd("FileType", {
     group = vim.api.nvim_create_augroup("TreesitterAutoFeatures", { clear = true }),
     callback = function(args)
+      if vim.b[args.buf].bigfile then
+        return
+      end
+
       local filetype = vim.bo[args.buf].filetype
       local lang = vim.treesitter.language.get_lang(filetype) or filetype
       if not parsers[lang] then
         return
       end
 
-      set_feature_options(args.buf, vim.api.nvim_get_current_win())
+      set_indent(args.buf)
 
       if start_features(args.buf, lang) then
         return

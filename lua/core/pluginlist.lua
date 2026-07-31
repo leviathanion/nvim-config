@@ -18,10 +18,6 @@ local pluginlist = {
     cmd = "StartupTime",
   },
 
-  {
-    "LunarVim/bigfile.nvim",
-  },
-
   -- git
   {
     "lewis6991/gitsigns.nvim",
@@ -172,7 +168,12 @@ local pluginlist = {
       require("configs.nvim-treesitter").config()
     end,
     dependencies = {
-      { "nvim-treesitter/nvim-treesitter-context" },
+      {
+        "nvim-treesitter/nvim-treesitter-context",
+        config = function()
+          require("configs.nvim-treesitter-context").config()
+        end,
+      },
     },
   },
 

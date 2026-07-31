@@ -7,7 +7,18 @@ function M.config()
     return
   end
 
-  indent_blankline.setup()
+  indent_blankline.setup({
+    scope = {
+      enabled = false,
+    },
+  })
+
+  local hooks_ok, hooks = pcall(require, "ibl.hooks")
+  if hooks_ok then
+    hooks.register(hooks.type.ACTIVE, function(bufnr)
+      return not vim.b[bufnr].bigfile
+    end)
+  end
 end
 
 return M

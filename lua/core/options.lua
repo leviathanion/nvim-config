@@ -62,6 +62,8 @@ local settings = {
     -- 使用绝对行号
     number = true,
     relativenumber = false,
+    -- 默认手动创建和管理折叠
+    foldmethod = "manual",
     -- 高亮所在行
     cursorline = true,
     -- 显示左侧图标指示列
