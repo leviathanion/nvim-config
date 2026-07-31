@@ -2,6 +2,7 @@ local general_group = vim.api.nvim_create_augroup("myAutoGroup", { clear = true 
 local format_group = vim.api.nvim_create_augroup("formatOnSave", { clear = true })
 local lint_group = vim.api.nvim_create_augroup("lintOnChange", { clear = true })
 local input_group = vim.api.nvim_create_augroup("fcitxIntegration", { clear = true })
+local lsp_group = vim.api.nvim_create_augroup("lspStatus", { clear = true })
 
 local autocmd = vim.api.nvim_create_autocmd
 
@@ -68,6 +69,30 @@ autocmd("BufEnter", {
   group = general_group,
   callback = function()
     vim.opt.formatoptions = vim.opt.formatoptions - "o" + "r"
+  end,
+})
+
+local announced_lsp_clients = {}
+
+autocmd("LspAttach", {
+  group = lsp_group,
+  callback = function(args)
+    local client_id = args.data and args.data.client_id
+    if not client_id or announced_lsp_clients[client_id] then
+      return
+    end
+
+    local client = vim.lsp.get_client_by_id(client_id)
+    if not client then
+      return
+    end
+
+    -- LspAttach fires for every buffer; announce each client only once.
+    announced_lsp_clients[client_id] = true
+    require("notify")(("%s attached"):format(client.name), vim.log.levels.INFO, {
+      title = "LSP",
+      timeout = 2000,
+    })
   end,
 })
 

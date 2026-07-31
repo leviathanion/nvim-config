@@ -81,25 +81,17 @@ local pluginlist = {
       require("configs.noice").config()
     end,
     dependencies = {
-      -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
       "MunifTanjim/nui.nvim",
-      -- OPTIONAL:
-      --   `nvim-notify` is only needed, if you want to use the notification view.
-      --   If not available, we use `mini` as the fallback
-      "rcarriga/nvim-notify",
-      -- 使用新窗口接管原有的viml.ui选择窗口
-      "stevearc/dressing.nvim",
+      {
+        "rcarriga/nvim-notify",
+        dependencies = {
+          { "nvim-tree/nvim-web-devicons" },
+        },
+        config = function()
+          require("configs.nvim-notify").config()
+        end,
+      },
     },
-  },
-  {
-    "rcarriga/nvim-notify",
-    event = "VeryLazy",
-    dependencies = {
-      { "nvim-tree/nvim-web-devicons" },
-    },
-    config = function()
-      require("configs.nvim-notify").config()
-    end,
   },
 
   -- bufferline

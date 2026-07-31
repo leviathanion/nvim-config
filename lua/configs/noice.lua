@@ -11,19 +11,29 @@ function M.config()
     messages = {
       view_search = false,
     },
-    views = {
-      notify = {
-        replace = true,
+    popupmenu = {
+      enabled = false,
+    },
+    routes = {
+      {
+        filter = { event = "lsp", kind = "progress" },
+        view = "notify",
+        opts = {
+          merge = true,
+          replace = true,
+        },
       },
     },
     lsp = {
       progress = {
-        throttle = 1000 / 30,
+        throttle = 100,
         view = "notify",
+      },
+      signature = {
+        enabled = false,
       },
       override = {
         ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-        ["vim.lsp.util.stylize_markdown"] = true,
       },
     },
   })
