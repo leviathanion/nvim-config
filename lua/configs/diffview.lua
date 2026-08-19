@@ -7,6 +7,8 @@ function M.config()
     return
   end
 
+  local actions = require("diffview.actions")
+
   diffview.setup({
     enhanced_diff_hl = true,
     view = {
@@ -35,6 +37,26 @@ function M.config()
       win_config = {
         position = "left",
         width = 35,
+      },
+    },
+    keymaps = {
+      view = {
+        { "n", "<leader>e", false },
+        { "n", "<leader>b", false },
+        { "n", "<localleader>e", actions.focus_files, { desc = "Focus changed files" } },
+        { "n", "<localleader>b", actions.toggle_files, { desc = "Toggle changed files" } },
+      },
+      file_panel = {
+        { "n", "<leader>e", false },
+        { "n", "<leader>b", false },
+        { "n", "<localleader>e", actions.focus_files, { desc = "Focus changed files" } },
+        { "n", "<localleader>b", actions.toggle_files, { desc = "Toggle changed files" } },
+      },
+      file_history_panel = {
+        { "n", "<leader>e", false },
+        { "n", "<leader>b", false },
+        { "n", "<localleader>e", actions.focus_files, { desc = "Focus history files" } },
+        { "n", "<localleader>b", actions.toggle_files, { desc = "Toggle history files" } },
       },
     },
   })

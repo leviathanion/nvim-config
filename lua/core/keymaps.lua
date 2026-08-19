@@ -1,5 +1,5 @@
 vim.g.mapleader = " "
-vim.g.maplocalleader = " "
+vim.g.maplocalleader = ","
 
 local map = vim.keymap.set
 
@@ -97,6 +97,7 @@ nmap("<leader>ts", "<Cmd>TermSelect<CR>", "select terminal")
 nmap("<leader>go", "<Cmd>DiffviewOpen<CR>", "open git changes")
 nmap("<leader>gq", "<Cmd>DiffviewClose<CR>", "close git changes")
 nmap("<leader>ge", "<Cmd>DiffviewFocusFiles<CR>", "focus changed files")
+nmap("<leader>gt", "<Cmd>DiffviewToggleFiles<CR>", "toggle changed files")
 nmap("<leader>gh", "<Cmd>DiffviewFileHistory %<CR>", "current file history")
 nmap("<leader>gH", "<Cmd>DiffviewFileHistory<CR>", "repository history")
 nmap("<leader>gd", "<Cmd>Gitsigns diffthis<CR>", "diff current file")

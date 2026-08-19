@@ -30,8 +30,7 @@ local pluginlist = {
   },
 
   {
-    "dlyongemallo/diffview-plus.nvim",
-    version = "*",
+    "sindrets/diffview.nvim",
     cmd = {
       "DiffviewOpen",
       "DiffviewClose",
