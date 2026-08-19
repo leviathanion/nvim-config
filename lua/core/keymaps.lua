@@ -104,8 +104,14 @@ nmap("<leader>gd", "<Cmd>Gitsigns diffthis<CR>", "diff current file")
 nmap("<leader>gb", "<Cmd>Gitsigns blame_line<CR>", "blame line")
 
 -- git hunks
-nmap("[g", "<Cmd>Gitsigns prev_hunk<CR>", "previous hunk")
-nmap("]g", "<Cmd>Gitsigns next_hunk<CR>", "next hunk")
+local function navigate_hunk(direction)
+  return function()
+    require("gitsigns").nav_hunk(direction, { navigation_message = false })
+  end
+end
+
+nmap("[g", navigate_hunk("prev"), "previous hunk")
+nmap("]g", navigate_hunk("next"), "next hunk")
 nmap("<leader>hp", "<Cmd>Gitsigns preview_hunk<CR>", "preview hunk")
 nmap("<leader>hs", "<Cmd>Gitsigns stage_hunk<CR>", "stage hunk")
 nmap("<leader>hu", "<Cmd>Gitsigns undo_stage_hunk<CR>", "undo stage hunk")
