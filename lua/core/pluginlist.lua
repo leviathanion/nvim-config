@@ -272,12 +272,14 @@ local pluginlist = {
   },
 
   {
-    "iamcco/markdown-preview.nvim",
-    lazy = true,
-    cmd = { "MarkdownPreview", "MarkdownPreviewStop", "MarkdownPreviewToggle" },
+    "brianhuster/live-preview.nvim",
+    cmd = { "LivePreview" },
     ft = { "markdown" },
-    build = function()
-      vim.fn["mkdp#util#install"]()
+    config = function()
+      require("livepreview.config").set({
+        picker = "telescope",
+        sync_scroll = true,
+      })
     end,
   },
 }
