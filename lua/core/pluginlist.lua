@@ -4,7 +4,9 @@ local pluginlist = {
   },
   {
     "neovim/nvim-lspconfig",
-    event = { "BufReadPre", "BufNewFile" },
+    -- vim.lsp.enable() installs global FileType handlers; register them before
+    -- any buffer event instead of relying on Lazy's event replay.
+    lazy = false,
     dependencies = {
       { "mason-org/mason.nvim" },
     },
