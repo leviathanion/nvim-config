@@ -5,6 +5,7 @@ local M = {}
 local ensure_installed = {
   "bash",
   "go",
+  "java",
   "javascript",
   "json",
   "lua",
