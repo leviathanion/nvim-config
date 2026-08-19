@@ -74,26 +74,39 @@ local pluginlist = {
     end,
   },
 
-  -- 通知弹窗美化
-  -- lazy.nvim
+  -- Noice is intentionally limited to command-line presentation. Messages,
+  -- notifications, completion, and LSP UI are owned by dedicated components.
   {
     "folke/noice.nvim",
     event = "VeryLazy",
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+    },
     config = function()
       require("configs.noice").config()
     end,
+  },
+
+  -- Explicit notifications; ordinary messages stay in Neovim's native UI.
+  {
+    "rcarriga/nvim-notify",
+    event = "VeryLazy",
     dependencies = {
-      "MunifTanjim/nui.nvim",
-      {
-        "rcarriga/nvim-notify",
-        dependencies = {
-          { "nvim-tree/nvim-web-devicons" },
-        },
-        config = function()
-          require("configs.nvim-notify").config()
-        end,
-      },
+      { "nvim-tree/nvim-web-devicons" },
     },
+    config = function()
+      require("configs.nvim-notify").config()
+    end,
+  },
+
+  -- LSP progress is transient state and has a dedicated, non-notification UI.
+  {
+    "j-hui/fidget.nvim",
+    version = "2.*",
+    event = "LspAttach",
+    config = function()
+      require("configs.fidget").config()
+    end,
   },
 
   -- bufferline

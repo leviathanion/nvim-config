@@ -89,7 +89,7 @@ autocmd("LspAttach", {
 
     -- LspAttach fires for every buffer; announce each client only once.
     announced_lsp_clients[client_id] = true
-    require("notify")(("%s attached"):format(client.name), vim.log.levels.INFO, {
+    vim.notify(("%s attached"):format(client.name), vim.log.levels.INFO, {
       title = "LSP",
       timeout = 2000,
     })

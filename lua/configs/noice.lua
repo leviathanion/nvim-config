@@ -8,32 +8,37 @@ function M.config()
   end
 
   noice.setup({
+    -- Noice owns only the floating command-line surface.
+    cmdline = {
+      enabled = true,
+      view = "cmdline_popup",
+    },
     messages = {
-      view_search = false,
+      enabled = false,
     },
     popupmenu = {
       enabled = false,
     },
-    routes = {
-      {
-        filter = { event = "lsp", kind = "progress" },
-        view = "notify",
-        opts = {
-          merge = true,
-          replace = true,
-        },
-      },
+    notify = {
+      enabled = false,
     },
     lsp = {
       progress = {
-        throttle = 100,
-        view = "notify",
+        enabled = false,
+      },
+      hover = {
+        enabled = false,
       },
       signature = {
         enabled = false,
       },
+      message = {
+        enabled = false,
+      },
       override = {
-        ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+        ["vim.lsp.util.convert_input_to_markdown_lines"] = false,
+        ["vim.lsp.util.stylize_markdown"] = false,
+        ["cmp.entry.get_documentation"] = false,
       },
     },
   })
