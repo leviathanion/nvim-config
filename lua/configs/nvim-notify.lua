@@ -31,6 +31,20 @@ function M.config()
   vim.notify = require("notify")
 
   vim.notify.setup(notify_opts)
+
+  local notify_keymaps = vim.api.nvim_create_augroup("notifyWindowKeymaps", { clear = true })
+  vim.api.nvim_create_autocmd("FileType", {
+    group = notify_keymaps,
+    pattern = "notify",
+    callback = function(args)
+      vim.keymap.set("n", "q", "<Cmd>close<CR>", {
+        buffer = args.buf,
+        silent = true,
+        desc = "关闭通知窗口",
+      })
+    end,
+  })
+
   -- 使用案例：
   -- 信息、级别、标题
   -- 级别有：info、warn、error、debug、trace
