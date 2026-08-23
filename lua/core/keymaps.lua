@@ -117,10 +117,5 @@ nmap("<leader>hs", "<Cmd>Gitsigns stage_hunk<CR>", "stage hunk")
 nmap("<leader>hu", "<Cmd>Gitsigns undo_stage_hunk<CR>", "undo stage hunk")
 nmap("<leader>hr", "<Cmd>Gitsigns reset_hunk<CR>", "reset hunk")
 
--- docstring
-nmap("<leader>cd", function()
-  require("neogen").generate()
-end, "generate docstring")
-
 -- terminal
 tmap("<Esc><Esc>", [[<C-\><C-n>]], "exit terminal mode")

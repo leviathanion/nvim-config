@@ -223,7 +223,11 @@ local pluginlist = {
   -- docstring
   {
     "danymat/neogen",
-    event = "BufReadPost",
+    keys = {
+      { "<leader>cd", function()
+        require("neogen").generate()
+      end, desc = "generate docstring" },
+    },
     config = function()
       require("neogen").setup({})
     end,
