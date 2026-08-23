@@ -1,9 +1,7 @@
 local settings = {
   o = {
     termguicolors = true,
-    encoding = "UTF-8",
     completeopt = "menu,menuone,noselect,noinsert",
-    fileencoding = "utf-8",
     -- jkhl移动时光标周围保留8行
     scrolloff = 8,
     sidescrolloff = 8,
@@ -27,8 +25,6 @@ local settings = {
     incsearch = true,
     -- 命令行高为1
     cmdheight = 1,
-    -- 当文件被外部程序修改时，自动加载
-    autoread = true,
     -- 鼠标支持
     mouse = "a",
     -- 禁止创建备份文件
@@ -45,8 +41,6 @@ local settings = {
     splitbelow = true,
     -- 不显示可见字符
     list = false,
-    -- 补全增强
-    wildmenu = true,
     -- 补全最多显示10行
     pumheight = 10,
     -- 永远显示tabline
