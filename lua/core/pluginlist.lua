@@ -230,16 +230,6 @@ local pluginlist = {
     end,
   },
 
-  {
-    "numToStr/Comment.nvim",
-    keys = function()
-      return require("configs.comment").keys
-    end,
-    config = function()
-      require("configs.comment").config()
-    end,
-  },
-
   -- docstring
   {
     "danymat/neogen",
