@@ -23,8 +23,9 @@ local settings = {
     hlsearch = false,
     -- 边输入边搜索
     incsearch = true,
-    -- 命令行高为1
-    cmdheight = 1,
+    -- 命令行高度为 0：cmdline 由 noice 浮动窗口接管，省出一行空间；
+    -- 有消息时 nvim 会临时自动扩展（代价：未开实验性 ui2 前仍可能遇 Press ENTER）
+    cmdheight = 0,
     -- 鼠标支持
     mouse = "a",
     -- 禁止创建备份文件
