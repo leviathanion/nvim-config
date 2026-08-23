@@ -53,9 +53,11 @@ local pluginlist = {
     end,
   },
 
+  -- 非功能依赖而是顺序保证：mason.setup() 必须先于 vim.lsp.enable() 运行，
+  -- 将 ~/.local/share/nvim/mason/bin 前置到 PATH，server 二进制才能按名字解析；
+  -- 因此它随 nvim-lspconfig（lazy=false）常驻加载，无需也不能懒加载。
   {
     "mason-org/mason.nvim",
-    cmd = { "Mason", "MasonInstall", "MasonUninstall", "MasonUpdate" },
     config = function()
       require("configs.mason").config()
     end,
