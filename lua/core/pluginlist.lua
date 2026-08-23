@@ -98,16 +98,6 @@ local pluginlist = {
     end,
   },
 
-  -- LSP progress is transient state and has a dedicated, non-notification UI.
-  {
-    "j-hui/fidget.nvim",
-    version = "2.*",
-    event = "LspAttach",
-    config = function()
-      require("configs.fidget").config()
-    end,
-  },
-
   -- bufferline
   {
     "akinsho/bufferline.nvim",
