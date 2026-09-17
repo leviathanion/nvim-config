@@ -128,6 +128,7 @@ local pluginlist = {
   -- file tree
   {
     "nvim-tree/nvim-tree.lua",
+    lazy = false,
     cmd = { "NvimTreeToggle", "NvimTreeFindFile", "NvimTreeFocus" },
     config = function()
       require("configs.nvim-tree").config()
@@ -226,9 +227,13 @@ local pluginlist = {
   {
     "danymat/neogen",
     keys = {
-      { "<leader>cd", function()
-        require("neogen").generate()
-      end, desc = "generate docstring" },
+      {
+        "<leader>cd",
+        function()
+          require("neogen").generate()
+        end,
+        desc = "generate docstring",
+      },
     },
     config = function()
       require("neogen").setup({})
