@@ -198,7 +198,7 @@ local pluginlist = {
   -- indent info
   {
     "lukas-reineke/indent-blankline.nvim",
-    event = { "BufReadPost" },
+    event = { "BufReadPost", "BufNewFile" },
     config = function()
       require("configs.indent-blankline").config()
     end,

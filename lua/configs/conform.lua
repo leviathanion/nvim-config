@@ -17,7 +17,7 @@ function M.config()
       typescript = { "prettierd", "prettier", stop_after_first = true },
       typescriptreact = { "prettierd", "prettier", stop_after_first = true },
     },
-    notify_on_error = false,
+    notify_on_error = true,
     formatters = {
       shfmt = {
         prepend_args = { "-i", "4" },

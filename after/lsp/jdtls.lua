@@ -114,10 +114,19 @@ local function build_runtime_config(jdks)
     local path_java = vim.fn.exepath("java")
     default_home = path_java ~= "" and java_home_from_executable(path_java) or nil
   end
-  default_home = default_home and (vim.uv.fs_realpath(default_home) or default_home) or nil
+  if default_home then
+    default_home = vim.fs.normalize(vim.fn.expand(default_home))
+    default_home = vim.uv.fs_realpath(default_home) or default_home
+  end
 
   table.sort(jdks, function(a, b)
-    return a.major < b.major
+    if a.major ~= b.major then
+      return a.major < b.major
+    end
+    if (a.home == default_home) ~= (b.home == default_home) then
+      return a.home == default_home
+    end
+    return a.home < b.home
   end)
 
   for _, jdk in ipairs(jdks) do
@@ -167,6 +176,26 @@ local function enable_mason_lombok()
   end
 end
 
+local function start_jdtls(dispatchers, config)
+  local data_dir = vim.fs.joinpath(vim.fn.stdpath("cache"), "jdtls", "workspace")
+  if config.root_dir then
+    local root = vim.uv.fs_realpath(config.root_dir) or vim.fn.fnamemodify(config.root_dir, ":p")
+    -- 完整根路径区分同名项目；真实路径让符号链接入口共用同一工作区。
+    data_dir = vim.fs.joinpath(data_dir, vim.fn.sha256(vim.fs.normalize(root)))
+  end
+
+  local cmd = { "jdtls", "-data", data_dir }
+  for arg in (vim.env.JDTLS_JVM_ARGS or ""):gmatch("%S+") do
+    cmd[#cmd + 1] = "--jvm-arg=" .. arg
+  end
+
+  return vim.lsp.rpc.start(cmd, dispatchers, {
+    cwd = config.cmd_cwd,
+    env = config.cmd_env,
+    detached = config.detached,
+  })
+end
+
 local function make_config()
   local jdks = detect_jdks()
   local server_runtime = find_server_runtime(jdks)
@@ -184,6 +213,7 @@ local function make_config()
   local max_concurrent_builds = math.max(1, math.min(2, vim.uv.available_parallelism()))
 
   local config = {
+    cmd = start_jdtls,
     -- Wrappers/settings identify the build root. A repository root keeps a
     -- multi-module Maven project in one JDTLS client; build files are the
     -- fallback for projects that are not in version control.

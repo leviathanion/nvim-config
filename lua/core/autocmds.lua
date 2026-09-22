@@ -5,25 +5,6 @@ local input_group = vim.api.nvim_create_augroup("fcitxIntegration", { clear = tr
 
 local autocmd = vim.api.nvim_create_autocmd
 
-local format_filetypes = {
-  javascript = true,
-  javascriptreact = true,
-  json = true,
-  lua = true,
-  python = true,
-  sh = true,
-  typescript = true,
-  typescriptreact = true,
-}
-
-local lint_filetypes = {
-  javascript = true,
-  javascriptreact = true,
-  python = true,
-  typescript = true,
-  typescriptreact = true,
-}
-
 local function can_edit_buffer(bufnr)
   return vim.bo[bufnr].buftype == "" and vim.bo[bufnr].modifiable and not vim.b[bufnr].bigfile
 end
@@ -35,12 +16,12 @@ autocmd("BufWritePre", {
       return
     end
 
-    local filetype = vim.bo[args.buf].filetype
-    if not format_filetypes[filetype] then
+    local conform = require("conform")
+    if not conform.formatters_by_ft[vim.bo[args.buf].filetype] then
       return
     end
 
-    require("conform").format({
+    conform.format({
       bufnr = args.buf,
       async = false,
       lsp_format = "fallback",
@@ -55,12 +36,9 @@ autocmd({ "BufWritePost", "InsertLeave" }, {
       return
     end
 
-    local filetype = vim.bo[args.buf].filetype
-    if not lint_filetypes[filetype] then
-      return
-    end
-
-    require("lint").try_lint(nil, { ignore_errors = true })
+    vim.api.nvim_buf_call(args.buf, function()
+      require("lint").try_lint()
+    end)
   end,
 })
 

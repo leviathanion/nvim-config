@@ -28,28 +28,35 @@ function M.config()
     return
   end
 
-  local parsers = require("nvim-treesitter.parsers")
+  local function apply_parser_mirror()
+    if not user_settings.global_options.useMirror then
+      return
+    end
 
-  if user_settings.global_options.useMirror then
-    for _, parser in pairs(parsers) do
+    for _, parser in pairs(require("nvim-treesitter.parsers")) do
       local install_info = parser.install_info
       if install_info and install_info.url then
         install_info.url = install_info.url:gsub(
-          "https://github.com/",
-          user_settings.global_options.mirrorURL
+          "^https://github%.com/",
+          function()
+            return user_settings.global_options.mirrorURL
+          end
         )
       end
     end
   end
 
+  vim.api.nvim_create_autocmd("User", {
+    group = vim.api.nvim_create_augroup("TreesitterParserMirror", { clear = true }),
+    pattern = "TSUpdate",
+    callback = apply_parser_mirror,
+  })
+  apply_parser_mirror()
+
   treesitter.setup({})
 
   local pending_buffers = {}
   local installing = {}
-
-  local function parser_is_installed(lang)
-    return vim.list_contains(treesitter.get_installed("parsers"), lang)
-  end
 
   local function notify_install_failed(lang, err)
     local message = ("treesitter parser 安装失败: %s"):format(lang)
@@ -68,7 +75,16 @@ function M.config()
   end
 
   local function start_features(buf, lang)
-    if not vim.api.nvim_buf_is_valid(buf) then
+    if not vim.api.nvim_buf_is_valid(buf)
+      or not vim.api.nvim_buf_is_loaded(buf)
+      or vim.b[buf].bigfile
+    then
+      return false
+    end
+
+    local filetype = vim.bo[buf].filetype
+    local current_lang = vim.treesitter.language.get_lang(filetype) or filetype
+    if current_lang ~= lang then
       return false
     end
 
@@ -100,8 +116,14 @@ function M.config()
   end
 
   local function ensure_core_parsers()
+    local parsers = require("nvim-treesitter.parsers")
+    local installed = {}
+    for _, lang in ipairs(treesitter.get_installed("parsers")) do
+      installed[lang] = true
+    end
+
     local missing = vim.tbl_filter(function(lang)
-      return parsers[lang] and not parser_is_installed(lang)
+      return parsers[lang] and not installed[lang]
     end, ensure_installed)
 
     if #missing == 0 then
@@ -129,7 +151,7 @@ function M.config()
 
       local filetype = vim.bo[args.buf].filetype
       local lang = vim.treesitter.language.get_lang(filetype) or filetype
-      if not parsers[lang] then
+      if not require("nvim-treesitter.parsers")[lang] then
         return
       end
 

@@ -10,6 +10,8 @@ function M.config()
   bufferline.setup({
     options = {
       numbers = "ordinal",
+      close_command = "confirm bdelete %d",
+      right_mouse_command = "confirm bdelete %d",
       buffer_close_icon = "󰅖",
       name_formatter = function(buf)
         if buf.name:match("%.md") then
@@ -31,7 +33,7 @@ function M.config()
           filetype = "NvimTree",
           text = "File Explorer",
           text_align = "left",
-          highlights = "Directory",
+          highlight = "Directory",
         },
       },
       separator_style = "slant",

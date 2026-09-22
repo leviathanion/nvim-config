@@ -7,6 +7,9 @@ function M.config()
   end
 
   blink.setup {
+    enabled = function()
+      return not vim.b.bigfile
+    end,
     keymap = {
       preset = 'none',
       ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
