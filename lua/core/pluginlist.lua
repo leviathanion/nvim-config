@@ -68,6 +68,7 @@ local pluginlist = {
     "folke/which-key.nvim",
     event = "VeryLazy",
     dependencies = {
+      { "nvim-mini/mini.icons", opts = {} },
       { "nvim-tree/nvim-web-devicons" },
     },
     config = function()
