@@ -9,6 +9,7 @@ function M.config()
   wk.add({
     { "<leader>c", group = "code" },
     { "<leader>f", group = "find" },
+    { "<leader>fp", group = "项目搜索" },
     { "<leader>g", group = "git" },
     { "<leader>h", group = "git hunk" },
     { "<leader>l", group = "lsp" },
