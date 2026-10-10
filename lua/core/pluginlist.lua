@@ -9,6 +9,7 @@ local pluginlist = {
     lazy = false,
     dependencies = {
       { "mason-org/mason.nvim" },
+      { "saghen/blink.cmp" },
     },
     config = function()
       require("configs.nvim-lspconfig").config()
@@ -208,7 +209,6 @@ local pluginlist = {
   --completion
   {
     "saghen/blink.cmp",
-    event = { "InsertEnter", "CmdlineEnter" },
     version = "1.*",
     config = function()
       require("configs.blink-cmp").config()
