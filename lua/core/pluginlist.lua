@@ -272,11 +272,9 @@ local pluginlist = {
   {
     "brianhuster/live-preview.nvim",
     cmd = { "LivePreview" },
-    ft = { "markdown" },
     config = function()
       require("livepreview.config").set({
         picker = "telescope",
-        sync_scroll = true,
       })
     end,
   },
