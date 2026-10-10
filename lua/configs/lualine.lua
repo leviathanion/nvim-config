@@ -14,7 +14,20 @@ function M.config()
     },
     sections = {
       lualine_a = { "mode" },
-      lualine_b = { "branch", "diff", "diagnostics" },
+      lualine_b = {
+        "branch",
+        {
+          "diff",
+          source = function()
+            -- 与行边标记共用统计，包含未保存的修改。
+            local status = vim.b.gitsigns_status_dict
+            if status then
+              return { added = status.added, modified = status.changed, removed = status.removed }
+            end
+          end,
+        },
+        "diagnostics",
+      },
       lualine_c = { "filename" },
       lualine_x = { "filetype" },
       -- 官方 lsp_status 组件：显示当前 buffer 的 LSP + 进度 spinner；
