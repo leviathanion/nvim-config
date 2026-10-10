@@ -53,8 +53,6 @@ function M.config()
   })
   apply_parser_mirror()
 
-  treesitter.setup({})
-
   local pending_buffers = {}
   local installing = {}
 
@@ -88,7 +86,16 @@ function M.config()
       return false
     end
 
-    return pcall(vim.treesitter.start, buf, lang)
+    local started = pcall(vim.treesitter.start, buf, lang)
+    if not started then
+      return false
+    end
+
+    local ok_query, query = pcall(vim.treesitter.query.get, lang, "indents")
+    if ok_query and query then
+      set_indent(buf)
+    end
+    return true
   end
 
   local function install_then_start(lang)
@@ -154,8 +161,6 @@ function M.config()
       if not require("nvim-treesitter.parsers")[lang] then
         return
       end
-
-      set_indent(args.buf)
 
       if start_features(args.buf, lang) then
         return
