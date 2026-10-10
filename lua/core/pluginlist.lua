@@ -243,7 +243,7 @@ local pluginlist = {
       },
     },
     config = function()
-      require("neogen").setup({})
+      require("neogen").setup({ snippet_engine = "nvim" })
     end,
     dependencies = {
       { "nvim-treesitter/nvim-treesitter" },
