@@ -8,11 +8,7 @@ function M.config()
   end
 
   noice.setup({
-    -- Noice owns only the floating command-line surface.
-    cmdline = {
-      enabled = true,
-      view = "cmdline_popup",
-    },
+    -- 只使用浮动命令行，其他功能沿用现有配置。
     messages = {
       enabled = false,
     },
@@ -34,11 +30,6 @@ function M.config()
       },
       message = {
         enabled = false,
-      },
-      override = {
-        ["vim.lsp.util.convert_input_to_markdown_lines"] = false,
-        ["vim.lsp.util.stylize_markdown"] = false,
-        ["cmp.entry.get_documentation"] = false,
       },
     },
   })
