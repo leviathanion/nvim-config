@@ -1,8 +1,15 @@
--- JDTLS needs JDK 21+, while a project may target an older JDK. The extra
--- discovery code is an intentional portability trade-off: this dotfile stays
--- path-free across OSes and JDK managers, with JDTLS_JAVA_HOME as an override.
+-- 服务端需要 JDK 21+，项目可使用更早版本。保留自动发现以便跨机器复用，
+-- JDTLS_JAVA_HOME 用于指定服务端 JDK，JAVA_HOME / PATH 决定默认项目 JDK。
 local is_windows = vim.fn.has("win32") == 1
 local java_name = is_windows and "java.exe" or "java"
+
+local function normalize_home(home)
+  if not home or home == "" then
+    return nil
+  end
+  home = vim.fs.normalize(vim.fn.expand(home))
+  return vim.uv.fs_realpath(home) or home
+end
 
 local function java_home_from_executable(executable)
   local realpath = vim.uv.fs_realpath(executable) or executable
@@ -19,18 +26,25 @@ local function java_major(home)
     return nil
   end
 
-  -- Every standard JDK ships this file; reading it avoids starting several JVMs
-  -- during Neovim startup. Fall back to `java -version` for unusual layouts.
+  -- 优先读取标准 JDK 的 release 文件，避免启动多个 JVM 探测版本。
   local release = io.open(vim.fs.joinpath(home, "release"), "r")
   if release then
     local version = release:read("*a"):match('JAVA_VERSION="([^"]+)"')
     release:close()
-    if version then
-      return version_major(version)
+    local major = version_major(version)
+    if major then
+      return major
     end
   end
 
-  local result = vim.system({ executable, "-version" }, { text = true }):wait()
+  local ok, process = pcall(vim.system, { executable, "-version" }, { text = true })
+  if not ok then
+    return nil
+  end
+  local result = process:wait(2000)
+  if result.code ~= 0 then
+    return nil
+  end
   local output = (result.stdout or "") .. (result.stderr or "")
   return version_major(output:match('version%s+"([^"]+)"'))
 end
@@ -40,21 +54,15 @@ local function detect_jdks()
   local seen = {}
 
   local function add(home)
-    if not home or home == "" then
+    home = normalize_home(home)
+    if not home or seen[home] then
       return
     end
-
-    home = vim.fs.normalize(vim.fn.expand(home))
-    local realpath = vim.uv.fs_realpath(home) or home
-    if seen[realpath] then
-      return
-    end
-
-    seen[realpath] = true
-    homes[#homes + 1] = realpath
+    seen[home] = true
+    homes[#homes + 1] = home
   end
 
-  -- Machine-specific paths belong in the environment, not in this dotfile.
+  -- 机器专用路径由环境提供。
   add(vim.env.JDTLS_JAVA_HOME)
   add(vim.env.JAVA_HOME)
 
@@ -114,10 +122,7 @@ local function build_runtime_config(jdks)
     local path_java = vim.fn.exepath("java")
     default_home = path_java ~= "" and java_home_from_executable(path_java) or nil
   end
-  if default_home then
-    default_home = vim.fs.normalize(vim.fn.expand(default_home))
-    default_home = vim.uv.fs_realpath(default_home) or default_home
-  end
+  default_home = normalize_home(default_home)
 
   table.sort(jdks, function(a, b)
     if a.major ~= b.major then
@@ -144,8 +149,7 @@ local function build_runtime_config(jdks)
 end
 
 local function find_server_runtime(jdks)
-  local preferred = vim.env.JDTLS_JAVA_HOME
-  preferred = preferred and (vim.uv.fs_realpath(preferred) or preferred) or nil
+  local preferred = normalize_home(vim.env.JDTLS_JAVA_HOME)
 
   local best
   for _, jdk in ipairs(jdks) do
@@ -162,20 +166,6 @@ local function find_server_runtime(jdks)
   return best and best.home or nil
 end
 
-local function enable_mason_lombok()
-  local lombok = vim.fs.joinpath(vim.fn.stdpath("data"), "mason", "share", "jdtls", "lombok.jar")
-  if vim.fn.filereadable(lombok) ~= 1 or lombok:find("%s") then
-    -- nvim-lspconfig's JDTLS_JVM_ARGS parser is whitespace-delimited; skipping
-    -- the optional agent is safer than breaking JDTLS on a path with spaces.
-    return
-  end
-
-  local args = vim.env.JDTLS_JVM_ARGS or ""
-  if not args:find("lombok%.jar", 1, false) then
-    vim.env.JDTLS_JVM_ARGS = vim.trim(args .. " -javaagent:" .. lombok)
-  end
-end
-
 local function start_jdtls(dispatchers, config)
   local data_dir = vim.fs.joinpath(vim.fn.stdpath("cache"), "jdtls", "workspace")
   if config.root_dir then
@@ -185,10 +175,19 @@ local function start_jdtls(dispatchers, config)
   end
 
   local cmd = { "jdtls", "-data", data_dir }
+  local has_lombok = false
   for arg in (vim.env.JDTLS_JVM_ARGS or ""):gmatch("%S+") do
     cmd[#cmd + 1] = "--jvm-arg=" .. arg
+    has_lombok = has_lombok or arg:match("^-javaagent:.*lombok[^/\\]*%.jar") ~= nil
+  end
+  local lombok = vim.fs.joinpath(vim.fn.stdpath("data"), "mason", "share", "jdtls", "lombok.jar")
+  if not has_lombok and vim.fn.filereadable(lombok) == 1 then
+    -- 直接传 argv，支持路径中的空格，也不修改全局 JVM 参数。
+    cmd[#cmd + 1] = "--jvm-arg=-javaagent:" .. lombok
   end
 
+  -- 插件的日志和工作区重建命令需要从客户端配置读取实际启动参数。
+  config.cmd = cmd
   return vim.lsp.rpc.start(cmd, dispatchers, {
     cwd = config.cmd_cwd,
     env = config.cmd_env,
@@ -196,60 +195,36 @@ local function start_jdtls(dispatchers, config)
   })
 end
 
-local function make_config()
-  local jdks = detect_jdks()
-  local server_runtime = find_server_runtime(jdks)
-  local configuration = {
-    -- Keep Maven/Gradle classpaths in sync when their build files change.
-    updateBuildConfiguration = "automatic",
-  }
-  local runtimes = build_runtime_config(jdks)
-  if #runtimes > 0 then
-    configuration.runtimes = runtimes
-  end
-
-  enable_mason_lombok()
-
-  local max_concurrent_builds = math.max(1, math.min(2, vim.uv.available_parallelism()))
-
-  local config = {
-    cmd = start_jdtls,
-    -- Wrappers/settings identify the build root. A repository root keeps a
-    -- multi-module Maven project in one JDTLS client; build files are the
-    -- fallback for projects that are not in version control.
-    root_markers = {
-      { "mvnw", ".mvn", "gradlew", "settings.gradle", "settings.gradle.kts" },
-      { ".git" },
-      { "pom.xml", "build.xml", "build.gradle", "build.gradle.kts" },
-    },
-    settings = {
-      java = {
-        configuration = configuration,
-        import = {
-          maven = { enabled = true },
-          gradle = {
-            enabled = true,
-            wrapper = { enabled = true },
-          },
-        },
-        maven = { downloadSources = true },
-        eclipse = { downloadSources = true },
-        -- Required for Telescope's workspace-wide method search.
-        symbols = {
-          includeSourceMethodDeclarations = true,
-          includeGeneratedCode = false,
-        },
-        search = { scope = "all" },
-        maxConcurrentBuilds = max_concurrent_builds,
-      },
-    },
-  }
-
-  if server_runtime then
-    config.cmd_env = { JAVA_HOME = server_runtime }
-  end
-
-  return config
+local function on_attach(_, bufnr)
+  -- java.inlayHints.* 默认只为字面量参数下发 hint，客户端要显式开启才会渲染。
+  vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
 end
 
-return make_config()
+local jdks = detect_jdks()
+local server_runtime = find_server_runtime(jdks)
+local runtimes = build_runtime_config(jdks)
+
+return {
+  cmd = start_jdtls,
+  cmd_env = server_runtime and { JAVA_HOME = server_runtime } or nil,
+  on_attach = on_attach,
+  -- 优先构建根，再用仓库根合并 Maven 子模块；无版本控制时回退到构建文件。
+  root_markers = {
+    { "mvnw", ".mvn", "gradlew", "settings.gradle", "settings.gradle.kts" },
+    { ".git" },
+    { "pom.xml", "build.xml", "build.gradle", "build.gradle.kts" },
+  },
+  settings = {
+    java = {
+      configuration = {
+        updateBuildConfiguration = "automatic",
+        runtimes = #runtimes > 0 and runtimes or nil,
+      },
+      maven = { downloadSources = true },
+      eclipse = { downloadSources = true },
+      -- Telescope 的工作区方法搜索依赖此选项。
+      symbols = { includeSourceMethodDeclarations = true },
+      maxConcurrentBuilds = math.max(1, math.min(2, vim.uv.available_parallelism())),
+    },
+  },
+}

@@ -9,7 +9,12 @@ local pluginlist = {
     lazy = false,
     dependencies = {
       { "mason-org/mason.nvim" },
+      -- 在 LSP 初始化前注册补全能力和 Java 扩展。
       { "saghen/blink.cmp" },
+      {
+        "mfussenegger/nvim-jdtls",
+        url = "https://codeberg.org/mfussenegger/nvim-jdtls.git",
+      },
     },
     config = function()
       require("configs.nvim-lspconfig").config()
