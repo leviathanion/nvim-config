@@ -189,6 +189,7 @@ local pluginlist = {
     cmd = { "Telescope" },
     dependencies = {
       { "nvim-lua/plenary.nvim" },
+      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
       { "nvim-telescope/telescope-live-grep-args.nvim" },
     },
     config = function()
