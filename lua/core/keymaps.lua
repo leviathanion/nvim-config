@@ -76,6 +76,11 @@ nmap("<leader>sv", "<Cmd>vsplit<CR>", "split vertical")
 -- buffers
 nmap("[b", "<Cmd>BufferLineCyclePrev<CR>", "previous buffer")
 nmap("]b", "<Cmd>BufferLineCycleNext<CR>", "next buffer")
+nmap("<leader>bd", function()
+  require("core.buffers").delete()
+end, "关闭当前 buffer（保留窗口布局）")
+nmap("<leader>bD", "<Cmd>bdelete<CR>", "关闭当前 buffer 和窗口")
+nmap("<leader>bo", "<Cmd>BufferLineCloseOthers<CR>", "关闭其他 buffer")
 
 -- diagnostics and lsp
 nmap("<leader>lo", vim.diagnostic.open_float, "open diagnostic")

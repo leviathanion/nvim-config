@@ -7,11 +7,14 @@ function M.config()
     return
   end
 
+  -- 鼠标点击关闭与 <leader>bd 走同一条路径：删 buffer 但保留窗口布局
+  local delete_buffer = require("core.buffers").delete
+
   bufferline.setup({
     options = {
       numbers = "ordinal",
-      close_command = "confirm bdelete %d",
-      right_mouse_command = "confirm bdelete %d",
+      close_command = delete_buffer,
+      right_mouse_command = delete_buffer,
       buffer_close_icon = "󰅖",
       name_formatter = function(buf)
         if buf.name:match("%.md") then
