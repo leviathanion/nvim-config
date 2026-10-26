@@ -1,7 +1,8 @@
--- 服务端需要 JDK 21+，项目可使用更早版本。保留自动发现以便跨机器复用，
--- JDTLS_JAVA_HOME 用于指定服务端 JDK，JAVA_HOME / PATH 决定默认项目 JDK。
+-- 服务端 JDK 由 JDTLS_JAVA_HOME 或 launcher 的 JAVA_HOME / PATH 规则选择。
+-- 项目 JDK 单独从 JAVA_HOME / PATH 识别，避免改写服务端继承的项目环境。
 local is_windows = vim.fn.has("win32") == 1
 local java_name = is_windows and "java.exe" or "java"
+local javac_name = is_windows and "javac.exe" or "javac"
 
 local function normalize_home(home)
   if not home or home == "" then
@@ -11,162 +12,61 @@ local function normalize_home(home)
   return vim.uv.fs_realpath(home) or home
 end
 
-local function java_home_from_executable(executable)
-  local realpath = vim.uv.fs_realpath(executable) or executable
-  return vim.fs.dirname(vim.fs.dirname(realpath))
+local function environment(config, name)
+  return config.cmd_env and config.cmd_env[name] or vim.env[name]
 end
 
-local function version_major(version)
-  return version and tonumber(version:match("^1%.(%d+)") or version:match("^(%d+)")) or nil
-end
-
-local function java_major(home)
-  local executable = vim.fs.joinpath(home, "bin", java_name)
-  if vim.fn.executable(executable) ~= 1 then
-    return nil
-  end
-
-  -- 优先读取标准 JDK 的 release 文件，避免启动多个 JVM 探测版本。
-  local release = io.open(vim.fs.joinpath(home, "release"), "r")
-  if release then
-    local version = release:read("*a"):match('JAVA_VERSION="([^"]+)"')
-    release:close()
-    local major = version_major(version)
-    if major then
-      return major
-    end
-  end
-
-  local ok, process = pcall(vim.system, { executable, "-version" }, { text = true })
+local function project_runtime(config, cwd)
+  local home = normalize_home(environment(config, "JAVA_HOME"))
+  local executable = home and vim.fs.joinpath(home, "bin", java_name) or java_name
+  -- 查询 JVM 自身，兼容 mise/asdf shim，以及 Java 8 的嵌套 jre 目录。
+  local ok, process = pcall(vim.system, { executable, "-XshowSettings:properties", "-version" }, {
+    text = true,
+    cwd = cwd,
+    env = config.cmd_env,
+  })
   if not ok then
-    return nil
+    vim.notify("jdtls: 无法执行项目 Java，请检查 JAVA_HOME / PATH", vim.log.levels.WARN)
+    return
   end
   local result = process:wait(2000)
-  if result.code ~= 0 then
-    return nil
+  if not result or result.code ~= 0 then
+    vim.notify("jdtls: 项目 JDK 探测失败或超时，未自动配置 runtimes", vim.log.levels.WARN)
+    return
   end
-  local output = (result.stdout or "") .. (result.stderr or "")
-  return version_major(output:match('version%s+"([^"]+)"'))
-end
 
-local function detect_jdks()
-  local homes = {}
-  local seen = {}
-
-  local function add(home)
-    home = normalize_home(home)
-    if not home or seen[home] then
-      return
+  local output = (result.stdout or "") .. "\n" .. (result.stderr or "")
+  home = normalize_home(output:match("java%.home%s*=%s*([^\r\n]+)"))
+  local version = output:match("java%.specification%.version%s*=%s*([^\r\n]+)")
+  local major = version and tonumber(version:match("^1%.(%d+)") or version:match("^(%d+)"))
+  if home and major == 8 and vim.fs.basename(home) == "jre" then
+    local parent = vim.fs.dirname(home)
+    if vim.fn.executable(vim.fs.joinpath(parent, "bin", javac_name)) == 1 then
+      home = parent
     end
-    seen[home] = true
-    homes[#homes + 1] = home
   end
-
-  -- 机器专用路径由环境提供。
-  add(vim.env.JDTLS_JAVA_HOME)
-  add(vim.env.JAVA_HOME)
-
-  local path_java = vim.fn.exepath("java")
-  if path_java ~= "" then
-    add(java_home_from_executable(path_java))
+  if
+    not home
+    or not major
+    or major < 8
+    or vim.fn.executable(vim.fs.joinpath(home, "bin", java_name)) ~= 1
+    or vim.fn.executable(vim.fs.joinpath(home, "bin", javac_name)) ~= 1
+  then
+    vim.notify(
+      "jdtls: 未识别到完整的项目 JDK（需要 Java 8+ 和 javac），请配置 runtimes",
+      vim.log.levels.WARN
+    )
+    return
   end
-
-  local patterns = {
-    "~/.sdkman/candidates/java/*",
-    "~/.asdf/installs/java/*",
-    "~/.local/share/mise/installs/java/*",
+  return {
+    name = major == 8 and "JavaSE-1.8" or ("JavaSE-%d"):format(major),
+    path = home,
+    default = true,
   }
-
-  if is_windows then
-    vim.list_extend(patterns, {
-      (vim.env.ProgramFiles or "C:/Program Files") .. "/Java/*",
-      (vim.env.ProgramFiles or "C:/Program Files") .. "/Eclipse Adoptium/*",
-      (vim.env.ProgramFiles or "C:/Program Files") .. "/Microsoft/jdk-*",
-      (vim.env.USERPROFILE or "~") .. "/scoop/apps/*jdk*/current",
-    })
-  else
-    vim.list_extend(patterns, {
-      "/usr/lib/jvm/*",
-      "/Library/Java/JavaVirtualMachines/*/Contents/Home",
-      "~/Library/Java/JavaVirtualMachines/*/Contents/Home",
-    })
-  end
-
-  for _, pattern in ipairs(patterns) do
-    for _, home in ipairs(vim.fn.glob(pattern, false, true)) do
-      add(home)
-    end
-  end
-
-  local jdks = {}
-  for _, home in ipairs(homes) do
-    local major = java_major(home)
-    if major then
-      jdks[#jdks + 1] = { home = home, major = major }
-    end
-  end
-
-  return jdks
-end
-
-local function runtime_name(major)
-  return major == 8 and "JavaSE-1.8" or ("JavaSE-%d"):format(major)
-end
-
-local function build_runtime_config(jdks)
-  local runtimes = {}
-  local seen_major = {}
-  local default_home = vim.env.JAVA_HOME
-
-  if not default_home or default_home == "" then
-    local path_java = vim.fn.exepath("java")
-    default_home = path_java ~= "" and java_home_from_executable(path_java) or nil
-  end
-  default_home = normalize_home(default_home)
-
-  table.sort(jdks, function(a, b)
-    if a.major ~= b.major then
-      return a.major < b.major
-    end
-    if (a.home == default_home) ~= (b.home == default_home) then
-      return a.home == default_home
-    end
-    return a.home < b.home
-  end)
-
-  for _, jdk in ipairs(jdks) do
-    if jdk.major >= 8 and not seen_major[jdk.major] then
-      seen_major[jdk.major] = true
-      runtimes[#runtimes + 1] = {
-        name = runtime_name(jdk.major),
-        path = jdk.home,
-        default = jdk.home == default_home or nil,
-      }
-    end
-  end
-
-  return runtimes
-end
-
-local function find_server_runtime(jdks)
-  local preferred = normalize_home(vim.env.JDTLS_JAVA_HOME)
-
-  local best
-  for _, jdk in ipairs(jdks) do
-    if jdk.major >= 21 then
-      if jdk.home == preferred then
-        return jdk.home
-      end
-      if not best or jdk.major > best.major then
-        best = jdk
-      end
-    end
-  end
-
-  return best and best.home or nil
 end
 
 local function start_jdtls(dispatchers, config)
+  local cwd = config.cmd_cwd or config.root_dir
   local data_dir = vim.fs.joinpath(vim.fn.stdpath("cache"), "jdtls", "workspace")
   if config.root_dir then
     local root = vim.uv.fs_realpath(config.root_dir) or vim.fn.fnamemodify(config.root_dir, ":p")
@@ -175,6 +75,22 @@ local function start_jdtls(dispatchers, config)
   end
 
   local cmd = { "jdtls", "-data", data_dir }
+  local server_home = normalize_home(environment(config, "JDTLS_JAVA_HOME"))
+  if server_home then
+    local executable = vim.fs.joinpath(server_home, "bin", java_name)
+    if vim.fn.executable(executable) ~= 1 then
+      error("jdtls: JDTLS_JAVA_HOME 下没有可执行的 " .. java_name .. ": " .. executable, 0)
+    end
+    -- 版本要求由 launcher 校验；显式配置错误时不悄悄换用其他 JDK。
+    vim.list_extend(cmd, { "--java-executable", executable })
+  end
+
+  local configuration = config.settings.java.configuration
+  if configuration.runtimes == nil then
+    local runtime = project_runtime(config, cwd)
+    configuration.runtimes = runtime and { runtime } or nil
+  end
+
   local has_lombok = false
   for arg in (vim.env.JDTLS_JVM_ARGS or ""):gmatch("%S+") do
     cmd[#cmd + 1] = "--jvm-arg=" .. arg
@@ -189,7 +105,7 @@ local function start_jdtls(dispatchers, config)
   -- 插件的日志和工作区重建命令需要从客户端配置读取实际启动参数。
   config.cmd = cmd
   return vim.lsp.rpc.start(cmd, dispatchers, {
-    cwd = config.cmd_cwd,
+    cwd = cwd,
     env = config.cmd_env,
     detached = config.detached,
   })
@@ -200,13 +116,8 @@ local function on_attach(_, bufnr)
   vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
 end
 
-local jdks = detect_jdks()
-local server_runtime = find_server_runtime(jdks)
-local runtimes = build_runtime_config(jdks)
-
 return {
   cmd = start_jdtls,
-  cmd_env = server_runtime and { JAVA_HOME = server_runtime } or nil,
   on_attach = on_attach,
   -- 优先构建根，再用仓库根合并 Maven 子模块；无版本控制时回退到构建文件。
   root_markers = {
@@ -218,7 +129,6 @@ return {
     java = {
       configuration = {
         updateBuildConfiguration = "automatic",
-        runtimes = #runtimes > 0 and runtimes or nil,
       },
       maven = { downloadSources = true },
       eclipse = { downloadSources = true },
